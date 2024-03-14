@@ -1,0 +1,97 @@
+programa Ejercicio2
+procesos
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras((HayPapelEnLaEsquina)&(p<5))
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso dejarP(ES p:numero)
+  comenzar
+    repetir p
+      depositarPapel
+    p:= 0
+  fin
+  proceso juntarP2(E p:numero; ES pude:boolean)
+  variables
+    cant:numero
+  comenzar
+    cant:=0
+    pude:= F
+    mientras((HayPapelEnLaEsquina)&(cant<p))
+      tomarPapel
+      cant:= cant + 1
+    si(cant<p)
+      repetir cant
+        depositarPapel
+      pude:= F
+    sino
+      pude:= V    
+  fin
+areas
+  atodos:AreaC(50,50,50,50)
+  arp1:  AreaP(5,1,5,100)
+  arp2:  AreaP(10,1,10,100)
+  arc1:  AreaP(11,1,11,1)
+  arc2:  AreaP(12,1,12,1)
+robots
+  robot productor
+  variables
+    cantP,av,ca:numero
+  comenzar
+    av:= PosAv
+    cantP:= 0
+    {falta analizar Ca100}
+    mientras(PosCa<100)
+      juntarP(cantP)      
+      si(cantP<5)
+        mover
+      sino
+        ca:=PosCa
+        BloquearEsquina(50,50)
+        Pos(50,50)
+        dejarP(cantP)
+        Pos(av,ca)
+        LiberarEsquina(50,50)
+  fin
+  robot consumidor
+  variables
+    av,ca,cant,p:numero
+    pude:boolean
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    cant:= 0
+    p:= 0
+    mientras(cant<8) 
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      Random(p,2,5)
+      juntarP2(p,pude)
+      Pos(av,ca)
+      LiberarEsquina(50,50)
+      si(pude)
+        dejarP(p)
+        cant:= 0
+      sino
+        cant:= cant + 1
+  fin
+variables
+  rp1:productor
+  rp2:productor
+  rc1:consumidor
+  rc2:consumidor
+comenzar
+  AsignarArea(rp1,atodos)
+  AsignarArea(rp2,atodos)
+  AsignarArea(rc1,atodos)
+  AsignarArea(rc2,atodos)
+  AsignarArea(rp1,arp1)
+  AsignarArea(rp2,arp2)
+  AsignarArea(rc1,arc1)
+  AsignarArea(rc2,arc2)
+  Iniciar(rp1,5,1)
+  Iniciar(rp2,10,1)
+  Iniciar(rc1,11,1)
+  Iniciar(rc2,12,1)
+fin

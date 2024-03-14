@@ -1,0 +1,109 @@
+programa Ejercicio1
+procesos
+  proceso juntarF(E cantF:numero)
+  comenzar
+    repetir cantF
+      tomarFlor
+  fin
+  proceso juntarT
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+areas
+  ars:  AreaP(100,100,100,100)
+  arc1:  AreaPC(1,1,1,100)
+  arc2:  AreaPC(2,1,2,100)
+  arc3:  AreaPC(3,1,3,100)
+robots
+  robot cliente
+  variables
+    cantFlores,av,ca,id:numero
+    termino,listo:boolean
+  comenzar
+    termino:= F
+    RecibirMensaje(id,rs)
+    mientras(termino = F)
+      av:=PosAv
+      ca:=PosCa
+      Random(cantFlores,1,4)
+      EnviarMensaje(id,rs)
+      EnviarMensaje(cantFlores,rs)
+      EnviarMensaje(av,rs)
+      EnviarMensaje(ca+1,rs)
+      RecibirMensaje(listo,rs)
+      Pos(av,ca+1)
+      juntarF(cantFlores)
+      Pos(av,ca)
+      mientras((cantFlores>0)&(PosCa<100))
+        depositarFlor
+        mover
+        cantFlores:= cantFlores - 1
+      si(PosCa = 100)
+        termino:= V 
+        EnviarMensaje(id,rs)
+        EnviarMensaje(0,rs){cantF}
+        EnviarMensaje(0,rs){av}
+        EnviarMensaje(0,rs){ca}
+  fin
+  robot servidor
+  variables
+    cantF,av,ca,id,terminados:numero
+  comenzar
+  {agrego este proceso para q funcione el programa}
+    juntarT
+    terminados:= 0
+    EnviarMensaje(1,rc1)
+    EnviarMensaje(2,rc2)
+    EnviarMensaje(3,rc3)
+    mientras(terminados < 3)
+      RecibirMensaje(id,*)
+      si(id=1)     
+        RecibirMensaje(cantF,rc1)
+        RecibirMensaje(av,rc1)
+        RecibirMensaje(ca,rc1) 
+      sino 
+        si(id=2)
+          RecibirMensaje(cantF,rc2)
+          RecibirMensaje(av,rc2)
+          RecibirMensaje(ca,rc2)
+        sino
+          RecibirMensaje(cantF,rc3)
+          RecibirMensaje(av,rc3)
+          RecibirMensaje(ca,rc3)
+      si(cantF>0)
+        BloquearEsquina(av,ca)
+        Pos(av,ca)
+        repetir cantF
+          depositarFlor
+        Pos(100,100)
+        LiberarEsquina(av,ca)
+        si(id=1)
+          EnviarMensaje(V,rc1)
+        sino
+          si(id=2)
+            EnviarMensaje(V,rc2)
+          sino
+            EnviarMensaje(V,rc3)
+      sino
+        terminados:= terminados + 1      
+  fin
+variables
+  rs:servidor
+  rc1:cliente
+  rc2:cliente
+  rc3:cliente
+comenzar
+  AsignarArea(rs,ars)
+  AsignarArea(rs,arc1)
+  AsignarArea(rs,arc2)
+  AsignarArea(rs,arc3)
+  AsignarArea(rc1,arc1)
+  AsignarArea(rc2,arc2)
+  AsignarArea(rc3,arc3)
+  Iniciar(rs,100,100)
+  Iniciar(rc1,1,1)
+  Iniciar(rc2,2,1)
+  Iniciar(rc3,3,1)
+fin
+

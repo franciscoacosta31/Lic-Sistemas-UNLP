@@ -1,0 +1,88 @@
+programa Ejercicio5
+procesos
+  proceso siPapel(ES papel:boolean)
+  comenzar
+    si(HayPapelEnLaEsquina)
+      tomarPapel
+    sino
+      papel:= F  
+  fin
+areas
+  arc:  AreaP(1,1,1,1)
+  ar1:  AreaP(4,1,4,100)
+  ar2:  AreaP(6,1,6,100)
+  ar3:  AreaP(8,1,8,100)
+  ar4:  AreaP(10,1,10,100)
+  atodos:  AreaPC(11,11,11,11)
+robots
+  robot corredor
+  variables
+    papel:boolean
+    av,ca,id:numero
+  comenzar
+    RecibirMensaje(id,rc)
+    papel:= V
+    av:= PosAv
+    mientras((papel)&(PosCa<100))
+      ca:= PosCa
+      BloquearEsquina(11,11)
+      Pos(11,11)
+      siPapel(papel)    
+      Pos(av,ca)
+      LiberarEsquina(11,11)  
+      si(papel)
+        depositarPapel
+        mover  
+    ca:= PosCa  
+    EnviarMensaje(id,rc)    
+    EnviarMensaje(ca,rc)   
+  fin
+  robot coordinador
+  variables
+    camax,rmax,id,ca:numero
+  comenzar
+    camax:= 0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    EnviarMensaje(4,r4)
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(ca,r1)
+      sino
+        si(id=2)
+          RecibirMensaje(ca,r2)
+        sino
+          si(id=3)
+            RecibirMensaje(ca,r3)
+          sino
+            si(id=4)
+              RecibirMensaje(ca,r4)
+      si(ca>camax)
+        camax:= ca
+        rmax:= id
+    Informar('ganador',rmax)  
+  fin
+variables
+  rc:coordinador
+  r1:corredor
+  r2:corredor
+  r3:corredor
+  r4:corredor
+comenzar
+  AsignarArea(rc,arc)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r3,ar3)
+  AsignarArea(r4,ar4)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  AsignarArea(r3,atodos)
+  AsignarArea(r4,atodos)
+  Iniciar(rc,1,1)
+  Iniciar(r1,4,1)
+  Iniciar(r2,6,1)
+  Iniciar(r3,8,1)
+  Iniciar(r4,10,1)
+fin

@@ -1,0 +1,101 @@
+programa Parcial6
+procesos
+  proceso vaciarBolsa(ES f:numero; ES p:numero; ES total:numero)
+  comenzar
+    repetir f
+      depositarFlor
+    repetir p
+      depositarPapel
+    total:= total + f + p
+    f:= 0
+    p:= 0
+  fin
+  proceso buscarFyP(ES cantF:numero; ES cantP:numero)
+  variables
+    av,ca,cantF,cantP:numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    Random(cantF,1,3)
+    repetir cantF
+      BloquearEsquina(21,21)
+      Pos(21,21)
+      tomarFlor
+      Pos(av,ca)
+      LiberarEsquina(21,21)
+    Random(cantP,1,3)
+    repetir cantP
+      BloquearEsquina(22,22)
+      Pos(22,22)
+      tomarPapel
+      Pos(av,ca)
+      LiberarEsquina(22,22)
+  fin
+areas
+  ar1:  AreaP(1,1,20,20)
+  ar2:  AreaP(21,1,40,20)
+  arj:  AreaP(23,23,23,23)
+  atodos:  AreaPC(21,21,22,22)
+robots
+  robot jefe
+  variables
+    ancho,alto,id,cant,canttotal:numero
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    Random(ancho,1,20)
+    Random(alto,1,20)
+    EnviarMensaje(ancho,r1)
+    EnviarMensaje(alto,r1)
+    Random(ancho,1,20)
+    Random(alto,1,20)
+    {tomo el ancho y alto como hasta la calle/avenida que llega}
+    EnviarMensaje(ancho,r2)
+    EnviarMensaje(alto,r2)
+    {.}
+    RecibirMensaje(id,*)
+    si(id=1)
+      RecibirMensaje(cant,r1)
+      Informar('ganadorR1',cant)
+    sino
+      RecibirMensaje(cant,r2)
+      Informar('ganadorR2',cant)
+    repetir 2
+      RecibirMensaje(cant,*) {recibo la id y la cantidad del robot perdedor}
+  fin
+  robot trabajador
+  variables
+    id,ancho,alto,f,p,total,av,ca:numero
+  comenzar
+    total:= 0
+    RecibirMensaje(id,rj)
+    RecibirMensaje(ancho,rj)
+    RecibirMensaje(alto,rj)
+    repetir 2
+      repetir alto
+        mover
+        buscarFyP(f,p)
+        vaciarBolsa(f,p,total)
+      derecha
+      repetir ancho
+        mover
+        buscarFyP(f,p)
+        vaciarBolsa(f,p,total)
+      derecha  
+    EnviarMensaje(id,rj)
+    EnviarMensaje(total,rj)
+  fin  
+variables
+  rj:jefe
+  r1:trabajador
+  r2:trabajador
+comenzar
+  AsignarArea(rj,arj)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  Iniciar(rj,23,23)
+  Iniciar(r1,1,1)
+  Iniciar(r2,21,1)
+fin

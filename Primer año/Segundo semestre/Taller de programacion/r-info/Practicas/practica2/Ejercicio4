@@ -1,0 +1,152 @@
+programa Ejercicio4
+procesos
+  proceso juntarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso mandarFalso
+  comenzar
+    EnviarMensaje(F,r1)
+    EnviarMensaje(F,r2)
+    EnviarMensaje(F,r3)
+    EnviarMensaje(F,r4)
+  fin
+  proceso enviarTodo(E id:numero; E ok:boolean)
+  comenzar
+    si(id = 1)
+      EnviarMensaje(ok,r1)
+    sino
+      si (id = 2)
+        EnviarMensaje(ok,r2)
+      sino
+        si(id = 3)
+          EnviarMensaje(ok,r3)
+        sino
+          EnviarMensaje(ok,r4)
+  fin
+  proceso enviar(E rmax:numero)
+  variables
+    ok:boolean
+    num:numero
+  comenzar
+    num:= 1
+    repetir 4
+      si (num = rmax)
+        ok:= V
+      sino
+        ok:= F
+      enviarTodo(num,ok)
+      num:= num + 1
+  fin
+areas
+  ciudad: AreaPC(25,25,75,75)
+  AreaRF: AreaP(1,1,1,1)
+  AreaR1: AreaP(25,1,25,1)
+  AreaR2: AreaP(30,1,30,1)
+  AreaR3: AreaP(35,1,35,1)
+  AreaR4: AreaP(40,1,40,1)
+robots
+  robot fiscalizador
+  variables
+    numRobot:numero
+    max:numero
+    rmax:numero
+    cr1:numero
+    cr2:numero
+    cr3:numero
+    cr4:numero
+    recibir:boolean
+  comenzar
+    max:= 0
+    cr1:= 0
+    cr2:= 0
+    cr3:= 0
+    cr4:= 0
+    repetir 10
+      Random(numRobot,1,4)
+      si (numRobot = 1)
+        cr1:= cr1 + 1
+        EnviarMensaje(V,r1)
+        RecibirMensaje(recibir,r1)
+        si (cr1 > max)
+          max:= cr1
+          rmax:= 1
+        sino 
+          si(numRobot = 2)
+            cr2:= cr2 + 1
+            EnviarMensaje(V,r2)
+            RecibirMensaje(recibir,r2)
+            si(cr2 > max)
+              max:= cr2
+              rmax:= 2
+          sino 
+            si (numRobot = 3)
+              cr3:= cr3 + 1
+              EnviarMensaje(V,r3)
+              RecibirMensaje(recibir,r3)
+              si (cr3 > max)
+                max:= cr3
+                rmax:= 3
+            sino
+              cr4:= cr4 + 1
+              EnviarMensaje(V,r4)
+              RecibirMensaje(recibir,r4)
+              si (cr4 > max)
+                max:= cr4
+                rmax:= 4
+    mandarFalso
+    enviar(rmax)  
+  fin
+  robot juntador
+  variables
+    actuar:boolean
+    soyGanador:boolean
+    ave:numero
+    cal:numero
+    aveAct:numero
+    calAct:numero
+  comenzar
+    aveAct:= PosAv
+    calAct:= PosCa
+    RecibirMensaje(actuar,rf)
+    mientras(actuar)
+      Random(ave,25,75)
+      Random(cal,25,75)
+      Pos(ave,cal)
+      juntarF
+      juntarP
+      Pos(aveAct,calAct)
+      EnviarMensaje(V,rf)
+      RecibirMensaje(actuar,rf)
+    RecibirMensaje(soyGanador,rf)
+    si(soyGanador)
+      Pos(50,50)
+  fin
+variables
+  rf:fiscalizador
+  r1:juntador
+  r2:juntador
+  r3:juntador
+  r4:juntador
+comenzar
+  AsignarArea(r1,ciudad)
+  AsignarArea(r2,ciudad)
+  AsignarArea(r3,ciudad)
+  AsignarArea(r4,ciudad)
+  AsignarArea(rf,AreaRF)
+  AsignarArea(r1,AreaR1)
+  AsignarArea(r2,AreaR2)
+  AsignarArea(r3,AreaR3)
+  AsignarArea(r4,AreaR4)
+  Iniciar(rf,1,1)
+  Iniciar(r1,25,1)
+  Iniciar(r2,30,1)
+  Iniciar(r3,35,1)
+  Iniciar(r4,40,1)
+fin

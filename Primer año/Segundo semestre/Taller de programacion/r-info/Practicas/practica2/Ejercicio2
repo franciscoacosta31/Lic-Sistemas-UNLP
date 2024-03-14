@@ -1,0 +1,85 @@
+programa Ejercicio2
+procesos
+  proceso tomarF(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores + 1
+  fin
+  proceso tomarP(ES papeles:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:= papeles + 1
+  fin
+  proceso recorrer(ES cant:numero)
+  variables
+    alto:numero
+    f:numero
+    p:numero
+  comenzar
+    cant:= 0
+    f:= 0
+    p:= 0
+    Random(alto,1,5)
+    repetir 4
+      repetir alto
+        tomarF(f)
+        tomarP(p)
+        mover
+      tomarF(f)
+      tomarP(p)
+      derecha
+      {recorro ancho}
+      mover
+      tomarF(f)
+      tomarP(p)
+      {recorro ancho}
+      repetir 3
+        derecha
+      si (f > p)
+        cant:= cant + 1
+      Random(alto,1,5)  
+      f:= 0
+      p:= 0  
+  fin
+areas
+  Area0: AreaP(1,1,1,1)
+  Area1: AreaP(2,1,6,40)
+  Area2: AreaP(7,1,11,40)
+  Area3: AreaP(12,1,16,40)
+robots
+  robot rjuntador
+  variables
+    cant:numero
+  comenzar
+    recorrer(cant)
+    EnviarMensaje(cant,rj)
+  fin
+  robot rjefe
+  variables
+    cant:numero
+    total:numero
+  comenzar
+    cant:= 0
+    total:= 0
+    repetir 3
+      RecibirMensaje(cant,*)
+      total:= total + cant
+    Informar(total)
+  fin
+variables
+  r1:rjuntador
+  r2:rjuntador
+  r3:rjuntador
+  rj:rjefe
+comenzar
+  AsignarArea(rj,Area0)
+  AsignarArea(r1,Area1)
+  AsignarArea(r2,Area2)
+  AsignarArea(r3,Area3)
+  Iniciar(rj,1,1)
+  Iniciar(r1,2,1)
+  Iniciar(r2,7,1)
+  Iniciar(r3,12,1)
+fin

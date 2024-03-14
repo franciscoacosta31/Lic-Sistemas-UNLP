@@ -1,0 +1,91 @@
+programa Ejercicio1
+procesos
+  proceso tomarF(ES flores:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      flores:= flores + 1
+  fin
+  proceso recorrer(ES flores:numero)
+  comenzar
+    flores:= 0
+    tomarF(flores)
+    repetir 9
+      mover
+      tomarF(flores)
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot juntador
+  variables
+    f:numero
+    quien:numero
+  comenzar
+    recorrer(f)
+    RecibirMensaje(quien,robot3)
+    EnviarMensaje(quien,robot3)
+    EnviarMensaje(f,robot3)
+  fin
+  robot fiscalizador
+  variables
+    quien:numero
+    f:numero
+    max:numero
+    rmax:numero
+  comenzar
+    max:= 0
+    EnviarMensaje(1,robot1)
+    EnviarMensaje(2,robot2)
+    EnviarMensaje(4,robot4)
+    EnviarMensaje(5,robot5)
+    EnviarMensaje(6,robot6)
+    EnviarMensaje(7,robot7)
+    repetir 6
+      RecibirMensaje(quien,*)
+      si(quien = 1)
+        RecibirMensaje(f,robot1)
+      sino 
+        si(quien = 2)
+          RecibirMensaje(f,robot2)
+        sino 
+          si(quien = 4)
+            RecibirMensaje(f,robot4)
+          sino 
+            si(quien = 5)
+              RecibirMensaje(f,robot5)
+            sino 
+              si(quien = 6)
+                RecibirMensaje(f,robot6)
+              sino 
+                RecibirMensaje(f,robot7)
+      si(f > max)
+        max:= f
+        rmax:= quien 
+    Informar(rmax)
+    Informar(max)
+  fin
+variables
+  robot1:juntador
+  robot2:juntador
+  robot4:juntador
+  robot5:juntador
+  robot6:juntador
+  robot7:juntador
+  robot3:fiscalizador
+comenzar
+  AsignarArea(robot1,ciudad)
+  AsignarArea(robot2,ciudad)
+  AsignarArea(robot3,ciudad)
+  AsignarArea(robot4,ciudad)
+  AsignarArea(robot5,ciudad)
+  AsignarArea(robot6,ciudad)
+  AsignarArea(robot7,ciudad)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,2,11)
+  Iniciar(robot3,2,1)
+  Iniciar(robot4,3,21)
+  Iniciar(robot5,4,31)
+  Iniciar(robot6,5,41)
+  Iniciar(robot7,6,51)
+fin

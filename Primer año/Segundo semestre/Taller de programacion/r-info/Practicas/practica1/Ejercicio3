@@ -1,0 +1,88 @@
+programa Ejercicio3
+procesos
+  proceso tomar(ES cantF:numero; ES cantP:numero)
+  variables
+    f: numero
+    p: numero
+  comenzar
+    p:= 0
+    f:= 0
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      cantF:= cantF + 1
+      f:= f + 1
+    repetir f
+      depositarFlor
+      
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      cantP:= cantP + 1
+      p:= p + 1
+    repetir p
+      depositarPapel    
+  fin
+  proceso sumar(ES cant:numero; E cantF:numero; E cantP:numero)
+  comenzar
+    cantF:= cantF + 1
+    si (cantP = cantF)
+      cant:= cant + 1
+  fin
+  proceso escalon(E ancho:numero; ES cant: numero)
+  variables
+    cantF:numero
+    cantP:numero
+  comenzar
+    repetir 4
+      repetir ancho
+        tomar(cantF,cantP)
+        mover
+      derecha
+      repetir ancho
+        tomar(cantF,cantP)
+        mover
+      tomar(cantF,cantP)
+      repetir 3
+        derecha
+      sumar(cant,cantF,cantP)
+      cantF:= 0
+      cantP:= 0
+  fin
+areas
+  ciudad: AreaC(1,1,100,100)
+robots
+  robot tipo1
+  variables
+    cant: numero
+  comenzar
+    cant:= 0
+    escalon(1,cant)
+    Informar(cant)
+  fin
+  robot tipo2
+  variables
+    cant:numero
+  comenzar
+    cant:= 0
+    escalon(2,cant)
+    Informar(cant)
+  fin
+  robot tipo3
+  variables
+    cant:numero
+  comenzar
+    cant:= 0
+    escalon(3,cant)
+    Informar(cant)
+  fin 
+variables
+  robot1: tipo1
+  robot2: tipo2
+  robot3: tipo3
+comenzar
+  AsignarArea(robot1,ciudad)
+  AsignarArea(robot2,ciudad)
+  AsignarArea(robot3,ciudad)
+  Iniciar(robot1,12,14)
+  Iniciar(robot2,17,10)
+  Iniciar(robot3,22,6)
+fin

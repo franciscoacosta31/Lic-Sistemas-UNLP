@@ -1,0 +1,110 @@
+programa parcial10
+procesos
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso dejarF(ES f:numero)
+  comenzar
+    repetir f
+      depositarFlor
+    f:= 0
+  fin
+  proceso dejar(ES f:numero;E ca:numero)
+  variables
+    av:numero
+  comenzar
+    av:= PosAv
+    BloquearEsquina(av,20)
+    Pos(av,20)
+    dejarF(f)
+    Pos(av,ca)
+    LiberarEsquina(av,20)
+  fin 
+areas
+  ar1:  AreaP(9,19,19,19)
+  ar2:  AreaP(9,21,19,21)
+  ar3:  AreaP(21,19,31,19)
+  ar4:  AreaP(21,21,31,21)
+  ar5:  AreaPC(9,20,19,20)
+  ar6:  AreaPC(21,20,31,20)
+  afinal:  AreaPC(20,20,20,20)
+robots
+  robot lateral
+  variables
+    ca,f,nada:numero
+  comenzar
+    f:= 0
+    ca:= PosCa
+    si(PosAv=31)
+      izquierda
+    sino
+      derecha     
+    repetir 10
+      mover
+      juntarF(f)
+      si(f>0)
+        dejar(f,ca)
+    si(PosAv=21)
+      EnviarMensaje(nada,r6)
+    sino
+      EnviarMensaje(nada,r5)    
+  fin
+  robot central
+  variables
+    f,av,ca,nada:numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    f:= 0
+    si(PosAv=31)
+      izquierda
+      RecibirMensaje(nada,r3)
+      RecibirMensaje(nada,r4)
+    sino
+      derecha  
+      RecibirMensaje(nada,r1)
+      RecibirMensaje(nada,r2)
+    repetir 10
+      mover
+      juntarF(f)
+    BloquearEsquina(20,20)
+    mover
+    dejarF(f)
+    Pos(av,ca)
+    LiberarEsquina(20,20)
+  fin
+variables
+  r1:lateral
+  r2:lateral
+  r3:lateral
+  r4:lateral
+  r5:central
+  r6:central
+comenzar
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r3,ar3)
+  AsignarArea(r4,ar4)
+  AsignarArea(r5,ar5)
+  AsignarArea(r6,ar6)
+  AsignarArea(r1,ar5)
+  AsignarArea(r2,ar5)
+  AsignarArea(r3,ar6)
+  AsignarArea(r4,ar6)
+  AsignarArea(r5,afinal)
+  AsignarArea(r6,afinal)
+  Iniciar(r1,9,19)
+  Iniciar(r2,9,21)
+  Iniciar(r3,31,19)
+  Iniciar(r4,31,21)
+  Iniciar(r5,9,20)
+  Iniciar(r6,31,20)
+fin

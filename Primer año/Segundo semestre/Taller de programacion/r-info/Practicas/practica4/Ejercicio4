@@ -1,0 +1,113 @@
+programa Ejercicio4
+procesos
+  proceso juntarF
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+  fin
+  proceso juntarP
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+  fin
+  proceso vaciar
+  comenzar
+    mientras(HayFlorEnLaBolsa)
+      depositarFlor
+    mientras(HayPapelEnLaEsquina)
+      depositarPapel
+  fin
+areas
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot jefe
+  variables
+    hacer,av,ca,r,nada,contador:numero
+    terminar,t1,t2:boolean
+  comenzar
+    t1:= V
+    t2:= V
+    contador:= 10
+    terminar:= F
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    {.}
+    mientras((contador>0)&(terminar=F))
+      Random(r,1,2)
+      Random(hacer,1,4)
+      Random(av,2,100)
+      Random(ca,2,100)
+      {caso robot 1}
+      si((r=1)&(t1)) 
+        EnviarMensaje(hacer,r1)  
+        si(hacer=4)
+          t1:=F
+        sino
+          si(terminar=F)
+            EnviarMensaje(av,r1)
+            EnviarMensaje(ca,r1)
+            RecibirMensaje(nada,r1)
+      {caso robot 2}
+      sino
+        si((r=2)&(t2))
+          EnviarMensaje(hacer,r2)
+          si(hacer=4)
+            t2:=F
+          sino
+            si(terminar=F)
+              EnviarMensaje(av,r2)
+              EnviarMensaje(ca,r2)
+              RecibirMensaje(nada,r2)
+      {.}
+      si((t1=F)&(t2=F))
+        terminar:=V                 
+      contador:= contador - 1
+    {.}  
+    {FIN MIENTRAS}  
+    si(contador=0) {si se repitió 10 sin asignar dos cuatros}
+      si (t1=V)
+        EnviarMensaje(4,r1)
+        t1:= F
+      si (t2=V)
+        EnviarMensaje(4,r2)  
+        t2:= F    
+  fin
+  robot trabajador
+  variables
+    id,hacer,av,ca:numero
+    terminar:boolean
+  comenzar
+    terminar:= F
+    RecibirMensaje(id,rj)
+    mientras(terminar = F)
+      RecibirMensaje(hacer,rj)
+      si(hacer<=3)
+        RecibirMensaje(av,rj)
+        RecibirMensaje(ca,rj)
+        Pos(av,ca)
+        si(hacer=1)
+          juntarF
+          EnviarMensaje(0,rj)
+        sino
+          si(hacer=2)
+            juntarP
+            EnviarMensaje(0,rj)
+          sino
+            si(hacer=3)
+              vaciar
+              EnviarMensaje(0,rj)
+      sino
+        terminar:= V
+  fin
+variables
+  rj:jefe
+  r1:trabajador
+  r2:trabajador
+comenzar
+  AsignarArea(rj,ciudad)
+  AsignarArea(r1,ciudad)
+  AsignarArea(r2,ciudad)
+  Iniciar(rj,1,1)
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+fin

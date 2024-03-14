@@ -1,0 +1,137 @@
+programa Ejercicio2
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso izquierda
+  comenzar
+    repetir 3
+      derecha
+  fin
+  proceso recorrerF
+  variables
+    cant:numero
+    f:numero
+  comenzar
+    f:= 0
+    cant:= 5
+    repetir 4
+      repetir cant
+        mover
+      juntarF(f)
+      derecha  
+      repetir cant
+        mover
+      juntarF(f)
+      izquierda  
+      cant:= cant - 1  
+    BloquearEsquina(16,16)  
+    mover
+    derecha  
+    mover
+    EnviarMensaje(1,robot3)
+    {esquina}
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)
+    cant:= 2
+    repetir 4
+      repetir cant
+        mover
+      juntarF(f)
+      derecha
+      repetir cant
+        mover
+      juntarF(f)
+      izquierda
+      cant:= cant + 1
+    Informar('flores',f)
+  fin
+  proceso recorrerP
+  variables
+    cant:numero
+    p:numero
+  comenzar
+    p:= 0
+    cant:= 5
+    repetir 4
+      repetir cant
+        mover
+      juntarP(p)
+      izquierda
+      repetir cant
+        mover
+      juntarP(p)
+      derecha
+      cant:= cant - 1 
+    BloquearEsquina(16,16)
+    mover
+    izquierda
+    mover
+    EnviarMensaje(2,robot3)
+    {esquina}
+    repetir 2
+      derecha
+    mover
+    LiberarEsquina(16,16)
+    cant:= 2
+    repetir 4
+      repetir cant
+        mover
+      juntarP(p)
+      izquierda
+      repetir cant
+        mover
+      juntarP(p)
+      derecha
+      cant:= cant + 1
+    Informar('papeles',p)
+  fin
+areas
+  areaC1: AreaP(1,1,14,30)
+  areaC12: AreaP(15,2,15,30)
+  areaC2: AreaP(17,1,31,30)
+  areaF: AreaP(15,1,15,1)
+  medio: AreaPC(16,16,16,16)
+robots
+  robot corredor
+  comenzar
+    recorrerF
+  fin
+  robot corredor2
+  comenzar
+    recorrerP
+  fin
+  robot fiscalizador
+  variables
+    id:numero
+  comenzar
+    RecibirMensaje(id,*)
+    Informar('ganador',id)
+    RecibirMensaje(id,*)
+  fin
+variables
+  robot1:corredor
+  robot2:corredor2
+  robot3:fiscalizador
+comenzar
+  AsignarArea(robot1,areaC1)
+  AsignarArea(robot1,areaC12)
+  AsignarArea(robot2,areaC2)
+  AsignarArea(robot1,medio)
+  AsignarArea(robot2,medio)
+  AsignarArea(robot3,areaF)
+  Iniciar(robot1,1,1)
+  Iniciar(robot2,31,1)
+  Iniciar(robot3,15,1)
+fin

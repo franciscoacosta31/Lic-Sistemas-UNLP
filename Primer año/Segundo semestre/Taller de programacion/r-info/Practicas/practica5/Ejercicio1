@@ -1,0 +1,130 @@
+programa Ejercicio1
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+areas
+  arj: AreaP(1,1,1,1)
+  ar1: AreaP(2,1,2,97)
+  ar2: AreaP(3,1,3,97)
+  aa1: AreaP(4,98,100,98)
+  aa2: AreaP(4,99,100,99)
+  atodos: AreaPC(1,98,3,100)
+robots
+  robot rojo
+  variables
+    f,id,av:numero
+  comenzar
+    f:= 0
+    av:=PosAv
+    RecibirMensaje(id,rj)
+    repetir 96
+      juntarF(f)
+      mover
+    juntarF(f)
+    {evito choque casi imposible en esquina supeiror izquierda}
+    BloquearEsquina(av,98)
+    mover
+    juntarF(f)
+    BloquearEsquina(av,99)
+    mover
+    LiberarEsquina(av,98)
+    juntarF(f)
+    mover
+    LiberarEsquina(av,99)
+    juntarF(f)
+    {.}
+    EnviarMensaje(id,rj)
+    EnviarMensaje(f,rj)
+  fin
+  robot azul
+  variables
+    p,id,ca:numero
+  comenzar
+    p:= 0
+    ca:= PosCa
+    RecibirMensaje(id,rj)
+    derecha
+    {evito el choque casi imposible en la esquina superior izquierda}
+    juntarP(p)
+    BloquearEsquina(2,ca)
+    mover
+    juntarP(p)
+    BloquearEsquina(3,ca)
+    mover
+    LiberarEsquina(2,ca)
+    juntarP(p)
+    mover
+    LiberarEsquina(3,ca)
+    {.}
+    repetir 96
+      juntarP(p)
+      mover
+    juntarP(p)
+    EnviarMensaje(id,rj)
+    EnviarMensaje(id,rj)
+  fin
+  robot jefe
+  variables
+    rojo,azul,cant,ganador,id:numero
+  comenzar
+    rojo:= 0
+    azul:= 0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,a1)
+    EnviarMensaje(4,a2)
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(cant,r1)
+        rojo:= rojo + cant
+      sino
+        si(id=2)
+          RecibirMensaje(cant,r2)
+          rojo:= rojo + cant
+        sino
+          si(id=3)
+            RecibirMensaje(cant,a1)
+            azul:= azul + cant
+          sino
+            RecibirMensaje(cant,a2)
+            azul:= azul + cant
+    si(rojo>azul)
+      ganador:= 1
+      Informar('ganador',ganador)
+    sino
+      ganador:= 2
+      Informar('ganador',ganador)
+  fin  
+variables
+  rj:jefe
+  r1:rojo
+  r2:rojo
+  a1:azul
+  a2:azul
+comenzar
+  AsignarArea(rj,arj)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(a1,aa1)
+  AsignarArea(a2,aa2)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  AsignarArea(a1,atodos)
+  AsignarArea(a2,atodos)
+  Iniciar(rj,1,1)
+  Iniciar(r1,2,1)
+  Iniciar(r2,3,1)
+  Iniciar(a1,1,98)
+  Iniciar(a2,1,99)
+fin

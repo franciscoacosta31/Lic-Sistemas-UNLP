@@ -1,0 +1,91 @@
+programa Ejercicio3
+procesos
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso recorrerP(ES p:numero)
+  comenzar
+    juntarP(p)
+    repetir 9
+      mover
+      juntarP(p)
+  fin
+  proceso recorrerF(ES f:numero)
+  comenzar
+    juntarF(f)
+    repetir 9
+      mover
+      juntarF(f)
+  fin
+areas
+  Area1: AreaP(1,1,10,1)
+  Area2: AreaP(11,1,20,1)
+  Area3: AreaP(1,5,10,5)
+  Area4: AreaP(11,5,20,5)
+robots
+  robot tipoA1
+  variables
+    p:numero
+  comenzar
+    p:= 0
+    derecha
+    recorrerP(p)
+    EnviarMensaje(p,robotA2)
+  fin
+  robot tipoA2
+  variables
+    uno:numero
+    p,p2:numero
+  comenzar
+    p2:= 0
+    derecha
+    RecibirMensaje(p,robotA1)
+    recorrerP(p2)
+    p:= p + p2
+    Informar(p)
+  fin
+  robot tipoB1
+  variables
+    f:numero
+  comenzar
+    f:= 0
+    derecha
+    recorrerF(f)
+    EnviarMensaje(f,robotB2)
+  fin
+  robot tipoB2
+  variables
+    uno:numero
+    f,f2:numero
+  comenzar
+    f2:=0
+    derecha
+    RecibirMensaje(f,robotB1)
+    recorrerF(f2)
+    f:= f + f2
+    Informar(f)
+  fin
+variables
+  robotA1:tipoA1
+  robotA2:tipoA2
+  robotB1:tipoB1
+  robotB2:tipoB2
+comenzar
+  AsignarArea(robotA1,Area1)
+  AsignarArea(robotA2,Area2)
+  AsignarArea(robotB1,Area3)  
+  AsignarArea(robotB2,Area4)
+  Iniciar(robotA1,1,1)
+  Iniciar(robotA2,11,1)
+  Iniciar(robotB1,1,5)
+  Iniciar(robotB2,11,5)
+fin

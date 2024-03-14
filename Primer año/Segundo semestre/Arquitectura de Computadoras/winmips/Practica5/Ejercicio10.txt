@@ -1,0 +1,44 @@
+contar_voc:	dadd $t0, $a1,$0
+		daddi $sp, $sp, -8
+		sd $ra, 0($sp)
+		
+loop:		dadd $a0, 0($t0)
+		jal subrutina
+		daddi $t0, $t0, 8
+		dadd $t1, 0($t0)
+		bnez $t1, loop
+			
+		ld $ra, 0($sp)
+		daddi $sp, $sp, 8
+
+
+subrutina:	dadd $v0, $0, $0
+		daddi $t0, $0,0x41
+		daddi $t1, $0,0x45 
+		daddi $t2, $0,0x49 
+		daddi $t3, $0,0x4f 
+		daddi $t4, $0,0x55
+		daddi $t5, $0,0x61
+		daddi $t6, $0,0x65
+		daddi $t7, $0,0x69
+		daddi $t8, $0,0x6f
+		daddi $t9, $0,0x75
+		beq $a0,$t0,sumar
+		beq $a0,$t1,sumar
+		beq $a0,$t2,sumar
+		beq $a0,$t3,sumar
+		beq $a0,$t4,sumar
+		beq $a0,$t5,sumar
+		beq $a0,$t6,sumar
+		beq $a0,$t7,sumar
+		beq $a0,$t8,sumar
+		beq $a0,$t9,sumar
+		j fin
+sumar:		daddi $v0,$0,1
+fin:		jr $ra
+		
+
+
+$a0 caracter
+$a1 cadena
+$v0 devuelve 1 si es vocal

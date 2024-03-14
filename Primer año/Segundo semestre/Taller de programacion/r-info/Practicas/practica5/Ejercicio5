@@ -1,0 +1,87 @@
+programa Ejercicio5
+procesos
+  proceso tomarP(ES p:numero)
+  comenzar
+    p:= 0
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso EnviarID
+  comenzar
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+  fin
+areas
+  ars:  AreaP(13,1,13,1)
+  ar1:  AreaP(10,1,10,1)
+  ar2:  AreaP(11,1,11,1)
+  ar3:  AreaP(12,1,12,1)
+  atodos:  AreaP(100,1,100,1)
+robots
+  robot servidor
+  variables
+    p,id,cant,av,ca:numero
+  comenzar
+    tomarP(p)
+    {necesario para q funcione}
+    av:= PosAv
+    ca:= PosCa
+    EnviarID
+    repetir 12
+      RecibirMensaje(id,*)
+      BloquearEsquina(100,1)
+      Pos(100,1)
+      Random(cant,1,5)
+      repetir cant    
+        depositarPapel
+      Pos(av,ca)
+      LiberarEsquina(100,1)  
+      si(id=1)
+        EnviarMensaje(cant,r1)
+      sino
+        si(id=2)
+          EnviarMensaje(cant,r2)
+        sino
+          EnviarMensaje(cant,r3)
+  fin
+  robot cliente
+  variables
+    id,cant,av,ca:numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    RecibirMensaje(id,rs)
+    repetir 4
+      EnviarMensaje(id,rs)
+      RecibirMensaje(cant,rs)
+      repetir cant
+        BloquearEsquina(100,1)
+        Pos(100,1)
+        si(HayPapelEnLaEsquina)
+          tomarPapel
+        Pos(av,ca)
+        si(HayPapelEnLaBolsa)
+          depositarPapel
+        LiberarEsquina(100,1)
+  fin
+variables
+  rs:servidor
+  r1:cliente
+  r2:cliente
+  r3:cliente
+comenzar
+  AsignarArea(rs,ars)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r3,ar3)
+  AsignarArea(rs,atodos)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  AsignarArea(r3,atodos)
+  Iniciar(rs,13,1)
+  Iniciar(r1,10,1)
+  Iniciar(r2,11,1)
+  Iniciar(r3,12,1)
+fin

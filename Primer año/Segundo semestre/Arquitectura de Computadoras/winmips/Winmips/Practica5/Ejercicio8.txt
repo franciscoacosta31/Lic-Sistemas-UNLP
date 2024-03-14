@@ -1,0 +1,22 @@
+subrutina: 	dadd $v0, $0, $0
+		dadd $t0, $a0, $0
+		dadd $t1, $a1, $0
+		daddi $t2, $0, 1
+loop:		lbu $t3, 0($t0)
+		lbu $t4, 0($t1)
+		beq $t3,$t4 seguir
+		dadd $v0,$0,$t2
+		j fin
+seguir:		daddi $t0, $t0, 8
+		daddi $t1, $t1, 8
+		daddi $t2, $t2, +1
+		bnez $t3, loop
+		daddi $v0, $0, -1			
+fin:		jr $ra
+
+
+$a0 = cadena asciiz
+$a1 = cadena asciiz
+$v0 = pos en las que las cadenas difieren
+si son iguales, -1
+$t2 = contador

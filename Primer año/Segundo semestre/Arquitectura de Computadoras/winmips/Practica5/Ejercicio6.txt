@@ -1,0 +1,25 @@
+	.data 
+valor1: .word 16 
+valor2: .word 4 
+result: .word 0 
+  
+ 	.text 
+	ld    $a0, valor1($zero)	;a0 = 16 
+ 	ld    $a1, valor2($zero)	;a1 = 4 
+ 	jal   a_la_potencia 	
+ 	sd    $v0, result($zero) 
+ 	halt 
+ 
+a_la_potencia:  daddi $v0, $zero, 1	;v0 = 1 
+         lazo:  slt   $t1, $a1, $zero   ;si a1 < 0, t1 = 1 
+ 		bnez  $t1, terminar 	;si t1 no es 0, salta a terminar
+ 		daddi $a1, $a1, -1 	;a1 = a1 -1
+		dmul  $v0, $v0, $a0 	;1 * 16 
+		j lazo 
+    terminar:   jr $ra
+
+; a) el programa hace la potencia cuarta de 16. Esta estructurado con una subrutina y un salto  
+; b) jal salta a la subrutina potencia y jr vuelve al programa principal
+; c)  la direccion de sd &v0. Los registros $a cumplen la funcion de parametros para la subrutina, $v0 lleva el valor que devuelve la subrutina
+; d) habria que hacer un "push" de el registro $ra antes de llamar a la subrutina nueva, y al regresar de esa subrutina hacer un "pop"
+

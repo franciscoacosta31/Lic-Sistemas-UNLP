@@ -1,0 +1,101 @@
+programa ejercicio4
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso dejarF(ES f:numero)
+  comenzar
+    repetir f
+      depositarFlor
+  fin
+  proceso enviar(E rob:numero;E av:numero; E ca:numero)
+  comenzar
+    si(rob=1)
+      EnviarMensaje(av,r1)
+      EnviarMensaje(ca,r1)
+    sino
+      si(rob=2)
+        EnviarMensaje(av,r2)
+        EnviarMensaje(ca,r2)
+      sino
+        EnviarMensaje(av,r3)
+        EnviarMensaje(ca,r3)
+  fin
+  proceso terminar
+  comenzar
+    EnviarMensaje(0,r1)
+    EnviarMensaje(0,r2)
+    EnviarMensaje(0,r3)
+  fin
+areas
+  arj:  AreaP(4,1,4,1)
+  ar1:  AreaP(1,1,1,1)
+  ar2:  AreaP(2,1,2,1)
+  ar3:  AreaP(3,1,3,1)
+  ac:  AreaPC(40,40,60,60)
+  at:  AreaC(10,10,10,10)
+robots
+  robot florero
+  variables
+    f,av,ca,avIni,caIni:numero
+  comenzar
+    f:= 0
+    avIni:= PosAv
+    caIni:= PosCa
+    RecibirMensaje(av,rj)
+    mientras(av<>0)
+      RecibirMensaje(ca,rj)
+      BloquearEsquina(av,ca)
+      Pos(av,ca)
+      juntarF(f)
+      Pos(avIni,caIni)
+      LiberarEsquina(av,ca)
+      RecibirMensaje(av,rj)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    dejarF(f)
+    Pos(avIni,caIni)
+    LiberarEsquina(10,10) 
+    EnviarMensaje(f,rj) 
+  fin
+  robot jefe
+  variables
+    av,ca,rob,f,ftotal:numero
+  comenzar
+    ftotal:= 0
+    repetir 8
+      Random(av,40,60)
+      Random(ca,40,60)
+      Random(rob,1,3)
+      enviar(rob,av,ca)
+    terminar
+    repetir 3
+      RecibirMensaje(f,*)
+      ftotal:= ftotal + f {ya que obligatoriamente debe recibir un mensaje, hago que ese mensaje sean las flores asi me ahorro el ir a buscar las flores para informarlas}
+    Informar('total',ftotal)
+  fin
+variables
+  rj:jefe
+  r1:florero
+  r2:florero
+  r3:florero
+comenzar
+  AsignarArea(rj,arj)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r3,ar3)
+  AsignarArea(r1,ac)
+  AsignarArea(r2,ac)
+  AsignarArea(r3,ac)
+  AsignarArea(rj,at)
+  AsignarArea(r1,at)
+  AsignarArea(r2,at)
+  AsignarArea(r3,at)
+  Iniciar(rj,4,1)
+  Iniciar(r1,1,1)
+  Iniciar(r2,2,1)
+  Iniciar(r3,3,1)
+fin

@@ -1,0 +1,182 @@
+programa Ejercicio6
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso juntarP(ES p:numero)
+  comenzar
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso juntarT(ES f:numero; ES p:numero)
+  comenzar
+    juntarF(f)
+    juntarP(p)
+  fin
+areas
+  arf:AreaP(1,1,1,1)
+  atodos: AreaPC(2,2,16,16)
+  afinal: AreaPC(1,20,100,22)
+robots
+  robot juntador1
+  variables
+    f,ca:numero
+  comenzar
+    f:= 0
+    repetir 4
+      repetir 5
+        juntarF(f)
+        mover 
+      juntarF(f)
+      derecha  
+    EnviarMensaje(1,rf)
+    RecibirMensaje(ca,rf)
+    Pos(1,ca)
+    derecha
+    mientras((f>0)&(PosAv<100))
+      depositarFlor
+      f:= f - 1
+      mover
+  fin 
+  robot juntador2
+  variables
+    f,p,ca:numero
+  comenzar
+    f:=0
+    p:=0
+    juntarT(f,p)
+    mover
+    juntarT(f,p)
+    BloquearEsquina(5,7)
+    mover
+    juntarT(f,p)
+    mover
+    LiberarEsquina(5,7)
+    juntarT(f,p)
+    repetir 6
+      mover
+      juntarT(f,p)
+    derecha
+    repetir 3
+      mover
+      juntarT(f,p)
+    BloquearEsquina(9,14)
+    mover
+    juntarT(f,p)
+    mover
+    LiberarEsquina(9,14)
+    juntarT(f,p)
+    repetir 4
+      mover
+      juntarT(f,p)
+    derecha
+    repetir 4
+      mover
+      juntarT(f,p)
+    BloquearEsquina(14,9)
+    mover
+    juntarT(f,p)
+    mover
+    LiberarEsquina(14,9)
+    juntarT(f,p)
+    repetir 3
+      mover
+      juntarT(f,p)
+    derecha
+    repetir 6
+      mover
+      juntarT(f,p)
+    BloquearEsquina(7,5)
+    mover
+    juntarT(f,p)
+    mover
+    LiberarEsquina(7,5)
+    juntarT(f,p)
+    mover  
+    EnviarMensaje(2,rf)
+    RecibirMensaje(ca,rf)
+    Pos(1,ca)
+    derecha
+    mientras(((f>0)|(p>0))&(PosAv<100))
+      si(f>0)
+        depositarFlor
+        f:= f - 1
+      si(p>0)
+        depositarPapel
+        p:= p - 1
+      mover 
+  fin
+  robot juntador3
+  variables
+    p,ca:numero
+  comenzar
+    p:= 0
+    repetir 4
+      repetir 6
+        juntarP(p)
+        mover
+      juntarP(p)
+      derecha
+    EnviarMensaje(3,rf)
+    RecibirMensaje(ca,rf)
+    Pos(1,ca)
+    derecha
+    mientras((p>0)&(PosAv<100))
+      depositarPapel
+      p:= p - 1
+      mover  
+  fin
+  robot fiscal
+  variables
+    num,enviar,uno,dos,tres,id:numero
+  comenzar
+    RecibirMensaje(id,*)
+    uno:= id
+    RecibirMensaje(id,*)
+    dos:= id
+    RecibirMensaje(id,*)
+    tres:= id
+    si(uno=1)
+      EnviarMensaje(20,r1)
+    sino
+      si(uno=2)
+        EnviarMensaje(20,r2)
+      sino
+        EnviarMensaje(20,r3)
+    si(dos=1)
+      EnviarMensaje(21,r1)
+    sino
+      si(dos=2)
+        EnviarMensaje(21,r2)
+      sino
+        EnviarMensaje(21,r3)
+    si(tres=1)
+      EnviarMensaje(22,r1)
+    sino
+      si(tres=2)
+        EnviarMensaje(22,r2)
+      sino
+        EnviarMensaje(22,r3)             
+  fin
+variables
+  rf:fiscal
+  r1:juntador1
+  r2:juntador2
+  r3:juntador3
+comenzar
+  AsignarArea(rf,arf)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  AsignarArea(r3,atodos)
+  AsignarArea(r1,afinal)
+  AsignarArea(r2,afinal)
+  AsignarArea(r3,afinal)
+  Iniciar(rf,1,1)
+  Iniciar(r1,2,2)
+  Iniciar(r2,5,5)
+  Iniciar(r3,9,9)
+fin

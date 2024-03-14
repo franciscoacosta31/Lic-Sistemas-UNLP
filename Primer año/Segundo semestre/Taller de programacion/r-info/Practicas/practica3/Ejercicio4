@@ -1,0 +1,85 @@
+programa Ejercicio4
+areas
+  areatrabajar:  AreaC(10,10,11,11)
+  arearf:  AreaP(1,1,1,1)
+  arearj1:  AreaP(9,9,9,9)
+  arearj2:  AreaP(9,10,9,10)
+  arearj3:  AreaP(9,11,9,11)
+  arearj4:  AreaP(9,12,9,12)
+robots
+  robot juntador
+  variables
+    f,id,avIni,caIni:numero
+    ok: boolean
+  comenzar
+    f:= 0
+    ok:= V
+    avIni:= PosAv
+    caIni:= PosCa
+    RecibirMensaje(id,rf)
+    mientras(ok)
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      si(HayFlorEnLaEsquina)
+        tomarFlor
+        BloquearEsquina(11,11)
+        Pos(11,11)
+        LiberarEsquina(10,10) 
+        depositarFlor  
+        Pos(avIni,caIni) {repito codigo para aumentar concurrencia}
+        LiberarEsquina(11,11)
+      sino
+        ok:= F   
+        Pos(avIni,caIni)
+        LiberarEsquina(10,10)
+        EnviarMensaje(id,rf)
+        EnviarMensaje(0,rf)
+  fin
+  robot fiscalizador
+  variables
+    id,num:numero
+  comenzar
+    EnviarMensaje(1,rj1)
+    EnviarMensaje(2,rj2)
+    EnviarMensaje(3,rj3)
+    EnviarMensaje(4,rj4)
+    repetir 4
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(num,rj1)
+      sino
+        si(id=2)
+          RecibirMensaje(num,rj2)
+        sino
+          si(id=3)
+            RecibirMensaje(num,rj3)
+          sino
+            RecibirMensaje(num,rj4)
+    Informar('ultimo',id)            
+    Pos(11,11)
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor  
+  fin
+variables
+  rf:fiscalizador
+  rj1:juntador
+  rj2:juntador
+  rj3:juntador
+  rj4:juntador
+comenzar
+  AsignarArea(rf,arearf)
+  AsignarArea(rj1,arearj1)
+  AsignarArea(rj2,arearj2)
+  AsignarArea(rj3,arearj3)
+  AsignarArea(rj4,arearj4)
+  AsignarArea(rf,areatrabajar)
+  AsignarArea(rj1,areatrabajar)
+  AsignarArea(rj2,areatrabajar)
+  AsignarArea(rj3,areatrabajar)
+  AsignarArea(rj4,areatrabajar)
+  Iniciar(rf,1,1)
+  Iniciar(rj1,9,9)
+  Iniciar(rj2,9,10)
+  Iniciar(rj3,9,11)
+  Iniciar(rj4,9,12)
+fin

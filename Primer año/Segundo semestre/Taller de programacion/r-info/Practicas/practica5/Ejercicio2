@@ -1,0 +1,140 @@
+programa Ejercicio2
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso juntarT(ES f:numero;ES p:numero)
+  comenzar
+    juntarF(f)
+    mientras(HayPapelEnLaEsquina)
+      tomarPapel
+      p:= p + 1
+  fin
+  proceso depositarT(ES f:numero;ES p:numero)
+  comenzar
+    repetir f
+      depositarFlor
+    repetir p
+      depositarPapel
+    f:= 0
+    p:= 0  
+  fin
+  proceso llevar(ES f:numero; ES p:numero)
+  variables
+    av,ca:numero
+  comenzar
+    av:= PosAv
+    ca:= PosCa
+    BloquearEsquina(50,50)
+    Pos(50,50)
+    depositarT(f,p)
+    Pos(av,ca)
+    LiberarEsquina(50,50)
+  fin
+  proceso listo(E id:numero)
+  comenzar
+    si(id=1)
+      EnviarMensaje(1,r2)
+      EnviarMensaje(1,r3)
+    sino
+      si(id=2)
+        EnviarMensaje(2,r1)
+        EnviarMensaje(2,r3)
+      sino
+        EnviarMensaje(3,r1)
+        EnviarMensaje(3,r2)
+  fin
+  proceso recibirquien(E id:numero)
+  variables
+    quien:numero
+  comenzar
+    si(id=1)
+      RecibirMensaje(quien,*)
+      si(quien=2)
+        RecibirMensaje(quien,r3)
+      sino
+        RecibirMensaje(quien,r2)  
+    sino
+      si(id = 2)
+        RecibirMensaje(quien,*)
+        si(quien = 1)
+          RecibirMensaje(quien,r3)
+        sino
+          RecibirMensaje(quien,r1)
+      sino
+        RecibirMensaje(quien,*)
+        si(quien=1)
+          RecibirMensaje(quien,r2)
+        sino
+          RecibirMensaje(quien,r1)   
+  fin
+areas
+  arj:  AreaP(1,4,1,4)
+  ar1:  AreaP(1,1,100,1)
+  ar2:  AreaP(1,2,100,2)
+  ar3:  AreaP(1,3,100,3)
+  atodos: AreaC(50,50,50,50)
+robots
+  robot recolector
+  variables
+    f,p,id,listo,av,ca:numero
+  comenzar
+    f:= 0
+    p:= 0
+    RecibirMensaje(id,rj)
+    {recorro primeras 10 calles (9 mover)}
+    derecha
+    juntarT(f,p)    
+    repetir 9
+      mover
+      juntarT(f,p)
+    llevar(f,p)
+    listo(id)
+    recibirquien(id)
+    repetir 9
+      repetir 10
+        mover
+        juntarT(f,p)
+      llevar(f,p)
+      listo(id)
+      repetir 2
+        recibirquien(id)
+    EnviarMensaje(V,rj)    
+  fin
+  robot jefe
+  variables
+    cant:numero
+    nada:boolean
+  comenzar
+    cant:= 0
+    EnviarMensaje(1,r1)
+    EnviarMensaje(2,r2)
+    EnviarMensaje(3,r3)
+    repetir 3
+      RecibirMensaje(nada,*)
+    Pos(50,50)
+    juntarF(cant)
+    Informar(cant)
+  fin
+variables
+  rj:jefe
+  r1:recolector
+  r2:recolector
+  r3:recolector
+comenzar
+  AsignarArea(rj,arj)
+  AsignarArea(r1,ar1)
+  AsignarArea(r2,ar2)
+  AsignarArea(r3,ar3)
+  AsignarArea(rj,atodos)
+  AsignarArea(r1,atodos)
+  AsignarArea(r2,atodos)
+  AsignarArea(r3,atodos)
+  Iniciar(rj,1,4)
+  Iniciar(r1,1,1)
+  Iniciar(r2,1,2)
+  Iniciar(r3,1,3)
+fin

@@ -1,0 +1,91 @@
+programa parcial7
+procesos
+  proceso juntarF(ES f:numero)
+  comenzar 
+    mientras(HayFlorEnLaEsquina)
+      tomarFlor
+      f:= f + 1
+  fin
+  proceso maximo(E f:numero;ES max:numero;ES rmax:numero;E id:numero)
+  comenzar
+    si(f>max)
+      max:= f
+      rmax:= id
+  fin
+areas 
+  ciudad:AreaC(1,1,100,100)
+robots
+  robot coordinador
+  variables
+    id,max,rmax,f:numero
+  comenzar
+    max:= -1
+    EnviarMensaje(1,rt1)
+    EnviarMensaje(2,rt2)
+    EnviarMensaje(3,rt3)
+    repetir 4
+      repetir 3
+        RecibirMensaje(id,*)
+      EnviarMensaje(V,rt1)
+      EnviarMensaje(V,rt2)
+      EnviarMensaje(V,rt3)
+    repetir 3  
+      RecibirMensaje(id,*)
+      si(id=1)
+        RecibirMensaje(f,rt1)
+        maximo(f,max,rmax,id)
+      sino
+        si(id=2)
+          RecibirMensaje(f,rt2)
+          maximo(f,max,rmax,id)
+        sino
+          si(id=3)
+            RecibirMensaje(f,rt3)
+            maximo(f,max,rmax,id)
+    EnviarMensaje(rmax,rt1)
+    EnviarMensaje(rmax,rt2)
+    EnviarMensaje(rmax,rt3)
+    Informar(rmax)    
+  fin  
+  robot trabajador
+  variables
+    f,id,av,ca,ganador:numero
+    seguir:boolean
+  comenzar
+    f:= 0
+    RecibirMensaje(id,rc)
+    repetir 4
+      repetir 5
+        juntarF(f)
+        mover  
+      EnviarMensaje(id,rc)
+      RecibirMensaje(seguir,rc)
+      derecha
+    EnviarMensaje(id,rc)
+    EnviarMensaje(f,rc)
+    RecibirMensaje(ganador,rc)  
+    av:= PosAv
+    ca:= PosCa
+    si (id<>ganador)
+      repetir f
+        BloquearEsquina(10,10)
+        Pos(10,10)
+        depositarFlor
+        Pos(av,ca)
+        LiberarEsquina(10,10)
+  fin
+variables
+  rc:coordinador
+  rt1:trabajador
+  rt2:trabajador
+  rt3:trabajador
+comenzar
+  AsignarArea(rc,ciudad)
+  AsignarArea(rt1,ciudad)
+  AsignarArea(rt2,ciudad)
+  AsignarArea(rt3,ciudad)
+  Iniciar(rc,20,1)
+  Iniciar(rt1,1,1)
+  Iniciar(rt2,7,1)
+  Iniciar(rt3,13,1)
+fin
