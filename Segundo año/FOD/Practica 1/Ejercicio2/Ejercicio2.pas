@@ -1,24 +1,14 @@
 program ejercicio2;
 type
 arch = file of integer;
-procedure cargarArchivo(var arc_logico:arch);
+
+procedure AsignarArchivo(var arc_logico:arch);
 var
-	arc_nombre:String;
-	num:integer;
+	archivo:string;
 begin
 	writeln('Ingrese el nombre del archivo');
-	read(arc_nombre);				{leo el nombre}
-	assign(arc_logico, arc_nombre); {asigno el nombre}
-	rewrite(arc_logico); 			{creo el archivo}
-	writeln('Ingrese un numero');
-	read(num);						{leo un numero}
-	while(num <> 30000) do
-	begin
-		write(arc_logico,num); {escribo el num en el archivo}
-		writeln('Ingrese un numero');
-		read(num);
-	end;
-	close(arc_logico); {cierro el archivo}
+	readln(archivo);
+	assign(arc_logico,archivo);
 end;
 
 procedure recorrerArchivo(var arc_logico:arch;var cant:integer; var promedio:real);
@@ -45,7 +35,7 @@ var
 	cant:integer;
 	promedio:real;
 BEGIN
-	cargarArchivo(arc_logico);
+	AsignarArchivo(arc_logico);
 	recorrerArchivo(arc_logico,cant,promedio);
 	writeln('La cantidad de numeros menores a 1500 es: ',cant);
 	writeln('El promedio de todos los numeros es: ',promedio);
