@@ -14,7 +14,34 @@ guessed_letters = []
 
 print("¡Bienvenido al juego de adivinanzas!")
 print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
-word_displayed = "_" * len(secret_word)
+
+difficulty = int(input("""Seleccione una dificultad: 
+      1 = Easy
+      2 = Medium
+      3 = Hard
+      """))
+
+match difficulty:
+    case 1: 
+        word_displayed = ""
+        # si es una vocal, la revelo. Si no es, agrego "_"
+        for letter in secret_word:
+            if letter in "aeiou":
+                word_displayed += letter
+            else:
+                word_displayed += "_"
+    case 2: 
+        word_displayed = ""
+        # revelo la primer letra de la palabra
+        word_displayed += secret_word[0]
+        # relleno la palabra con "_" hasta llegar a la ultima posición en la que revelo la letra
+        for i in range(len(secret_word)):
+            if i == len(secret_word) - 1:
+                word_displayed += secret_word[-1]
+            else:
+                 word_displayed += "_"
+    case 3:
+        word_displayed = "_" * len(secret_word)
 
 # Mostrar la palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
@@ -37,11 +64,26 @@ while(fails < max_fails):
         fails += 1
     # Mostrar la palabra parcialmente adivinada
     letters = []
-    for letter in secret_word:
-        if letter in guessed_letters:
-            letters.append(letter)
-        else:
-            letters.append("_")
+    match difficulty:
+        case 1:
+            for letter in secret_word:
+                if letter in guessed_letters or letter in "aeiou":   # agrego "or letter in 'aeiou'" para seguir revelando las vocales  
+                    letters.append(letter)
+                else:
+                    letters.append("_")
+        case 2:
+            letters.append(secret_word[0])
+            for i in range(1,len(secret_word)):
+                if secret_word[i] in guessed_letters or i == (len(secret_word) -1):
+                    letters.append(secret_word[i])
+                else:
+                    letters.append("_")
+        case 3:
+            for letter in secret_word:
+                if letter in guessed_letters:
+                    letters.append(letter)
+                else:
+                    letters.append("_")
     word_displayed = "".join(letters)
     print(f"Palabra: {word_displayed}")
     # Verificar si se ha adivinado la palabra completa
