@@ -28,7 +28,8 @@ for i in range(max_attempts):
 
     guessed_letters.append(letter)
     # Verificar si la letra está en la palabra secreta
-    if letter in secret_word:
+    # Agrego la segunda condición para que cuando no se ingrese nada, cuente como que el caracter no se encuentra en la palabra
+    if letter in secret_word and letter != "":          
         print("¡Bien hecho! La letra está en la palabra.")
     else:
         print("Lo siento, la letra no está en la palabra.")
