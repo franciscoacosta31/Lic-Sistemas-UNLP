@@ -1,0 +1,6 @@
+0 0 gen0
+nom0
+1 2 gen1
+nom1
+3 2 gen2
+nom2
