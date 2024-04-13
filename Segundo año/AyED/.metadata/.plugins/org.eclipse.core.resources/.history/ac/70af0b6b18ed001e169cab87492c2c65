@@ -1,7 +1,0 @@
-package ejercicio7;
-
-import java.util.*;
-
-public class InvertirLista {
-	private List<Integer> lista = new ArrayList();
-}

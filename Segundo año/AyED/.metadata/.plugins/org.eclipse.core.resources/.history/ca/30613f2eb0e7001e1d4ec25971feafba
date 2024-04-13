@@ -1,9 +1,0 @@
-package ejercicio3;
-
-public class Test {
-
-	public static void main(String[] args) {
-		Estudiante[] vectorEstudiantes = new Estudiante[2]; 
-		Profesor[] vectorProfesores = new Profesor[3];
-	}
-}

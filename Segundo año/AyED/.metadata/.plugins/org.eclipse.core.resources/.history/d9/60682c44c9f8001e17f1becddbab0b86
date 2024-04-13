@@ -1,6 +1,0 @@
-package ejercicio4;
-import ejercicio2.BinaryTree;
-
-public class ProfundidadDeArbolBinario {
-	BinaryTree<Integer> tree = new BinaryTree<Integer>();
-}
