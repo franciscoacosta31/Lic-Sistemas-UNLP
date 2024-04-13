@@ -1,0 +1,12 @@
+package ejercicio3;
+public class Test {
+
+	public static void main(String[] args) {
+		Estudiante[] vecEstudiantes = new Estudiante[2]; 
+		Profesor[] vecProfesores = new Profesor[3];
+		
+		
+		vecEstudiantes[0] = new Estudiante();
+	
+	}
+}

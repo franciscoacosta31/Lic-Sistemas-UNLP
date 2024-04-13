@@ -1,0 +1,27 @@
+package ejercicio7;
+
+import java.util.*;
+
+public class InvertirLista {
+	private List<Integer> lista = new ArrayList();
+	private int i = 0;
+	
+	public List<Integer> Invertir(List<Integer> lista2, int dimF){
+		
+		if (dimF>0) {
+			this.lista.add(lista2.get(this.getI()));
+			this.setI(i + 1);
+			this.Invertir(lista2,lista2.size()-1);
+		}
+		return lista;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+	
+}

@@ -1,0 +1,28 @@
+package ejercicio6;
+import ejercicio2.BinaryTree;
+
+public class Transformacion {
+	private BinaryTree<Integer> tree;
+	
+	public Transformacion(BinaryTree<Integer> arb) {
+		this.tree = arb;
+	}
+	
+	public BinaryTree<Integer> suma(){
+		return sum(this.tree);
+	}
+	
+	private int sum(BinaryTree<Integer> arb){
+		int total = 0;
+		
+		if(arb.isLeaf()) {
+			return 0;
+		}
+		else {
+			if (arb.hasLeftChild()) total+= sum(arb.getLeftChild());
+			if (arb.hasRightChild()) total+= sum(arb.getRightChild());
+		}
+		arb.setData(total)
+	}
+	
+}

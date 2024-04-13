@@ -1,0 +1,24 @@
+package ejercicio7;
+
+import java.util.*;
+
+public class CalcularSuma {
+	
+	public static int Sumador(List<Integer> lista, int indice, int suma){
+		
+		if (indice> 0) {
+			suma += Sumador(lista, indice-1, suma);
+		}
+		return suma;
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		List<Integer> lista = new LinkedList<Integer>();
+		
+		for(int i=1;i<=10;i++) {lista.add(i);}
+		int suma = 0;
+		System.out.println(Sumador(lista,lista.size()-1,suma));
+	}
+}

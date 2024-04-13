@@ -1,0 +1,47 @@
+package ejercicio7;
+import ejercicio2.BinaryTree;
+
+public class ParcialArboles {
+	BinaryTree<Integer> tree;
+	
+	public ParcialArboles(BinaryTree<Integer> arb) {
+		this.tree = arb;
+	}
+	
+	public BinaryTree<Integer> getNum(int num) {
+		return this.getArbol(this.tree,num);
+	}
+	
+	private BinaryTree<Integer> getAr(BinaryTree<Integer> arb, int num){
+		if(arb.getData() == num) {
+			return arb;
+		}
+		else {
+			if(arb.hasLeftChild())
+				this.getArbol(arb.getLeftChild(), num);
+			if(arb.hasRightChild())
+				this.getArbol(arb.getRightChild(), num);
+		}
+		return null;
+	}
+	
+	public boolean isLeftTree(int num) {
+		boolean ok = false;
+		return ok;
+	}
+	
+	public static void main(String[] args) {
+		BinaryTree<Integer> arb = new BinaryTree<Integer>(1);
+        arb.addLeftChild(new BinaryTree<Integer>(2));
+        arb.addRightChild(new BinaryTree<Integer>(3));
+        arb.getLeftChild().addRightChild(new BinaryTree<Integer>(4));
+        arb.getRightChild().addLeftChild(new BinaryTree<Integer>(5));
+        arb.getRightChild().addRightChild(new BinaryTree<Integer>(6));
+        arb.getRightChild().getLeftChild().addLeftChild(new BinaryTree<Integer>(7));
+        arb.getRightChild().getLeftChild().addRightChild(new BinaryTree<Integer>(8));
+        
+        ParcialArboles ar = new ParcialArboles(arb);
+        System.out.println(ar.getArbol(arb, 3));
+	}
+	
+}

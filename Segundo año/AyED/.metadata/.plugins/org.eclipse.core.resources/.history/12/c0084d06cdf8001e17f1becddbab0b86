@@ -1,0 +1,38 @@
+package ejercicio4;
+import ejercicio2.BinaryTree;
+
+public class RedBinariaLlena {
+	private BinaryTree<Integer> tree;
+	
+	public RedBinariaLlena(BinaryTree<Integer> ar) {
+		this.tree = ar;
+	}
+	
+	public int retardoReenvio() {
+		return this.retardoRecursion(tree);
+	}
+	
+	
+	public int retardoRecursion(BinaryTree<Integer> arb) {
+		int hi = 0;
+		int hd = 0;
+		
+		if(arb.isLeaf())
+			return arb.getData();
+		
+		if(arb.hasLeftChild())
+			hi = retardoRecursion(arb.getLeftChild());
+		
+		if(arb.hasRightChild())
+			hd = retardoRecursion(arb.getRightChild());
+		
+		if(hi > hd)
+			return hi+arb.getData();
+		else
+			return hd+arb.getData();
+	}
+	
+	
+	
+	
+}

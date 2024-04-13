@@ -1,0 +1,5 @@
+
+public class main {
+	Queue<BinaryTree<T>> cola = new Queue<BinaryTree<T>>();
+	cola.enqueue(5);
+}

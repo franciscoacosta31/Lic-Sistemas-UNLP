@@ -1,0 +1,24 @@
+package ejercicio7;
+
+import java.util.*;
+
+public class TestArrayList {
+
+	public static void main(String[] args) {
+		// Inciso A
+		Scanner s = new Scanner(System.in);
+		List <Integer> arlist = new ArrayList <Integer>();
+		int n = s.nextInt();
+		while (n != -1) {
+			arlist.add(n);
+			n = s.nextInt();
+		}
+		for (int x:arlist) {
+			System.out.println(x);
+		}
+		
+		//
+		
+		
+	}
+}
