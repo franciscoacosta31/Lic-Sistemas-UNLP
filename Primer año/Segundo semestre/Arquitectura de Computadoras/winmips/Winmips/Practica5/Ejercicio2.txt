@@ -1,8 +1,0 @@
-mtc1: copia bits de r a f
- 
-mfc1: copia bits de f a r
-
-cvt.l.d: convierte bits de flotante a fijo
-
-cvt.d.l: convierte bits de fijo a flotante
-

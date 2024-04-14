@@ -1,1 +1,0 @@
-C:\Users\Frann\OneDrive\Escritorio\pruebaparcial.s
