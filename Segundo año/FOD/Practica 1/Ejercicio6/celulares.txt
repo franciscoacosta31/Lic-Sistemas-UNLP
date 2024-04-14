@@ -1,9 +1,0 @@
-0 0 marca0
-71 0 desc0
-nom0
-1 1 marca1
-0 1 desc1
-nom1
-2 2 marca2
-2 2 desc2
-nom2

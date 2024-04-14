@@ -1,3 +1,0 @@
-1 1 marca1
-0 1 desc1
-nom1
