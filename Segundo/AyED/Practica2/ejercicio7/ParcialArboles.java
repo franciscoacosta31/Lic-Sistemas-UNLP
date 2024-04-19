@@ -17,7 +17,7 @@ public class ParcialArboles {
 			return arb;
 		}
 		else { 
-			BinaryTree<Integer> nodo = null;
+			BinaryTree<Integer> nodo = new BinaryTree<Integer>();
 			if(arb.hasLeftChild())
 				nodo = this.getAr(arb.getLeftChild(), num);
 			
@@ -28,11 +28,39 @@ public class ParcialArboles {
 		}
 	}
 	
-	public boolean isLeftTree(int num) {
-		boolean ok = false;
+	public int countTrees(BinaryTree<Integer> arb) {
+		int cant = 0;
 		
-		return ok;
+		if(arb.hasLeftChild()) {
+			cant+=countTrees(arb.getLeftChild());
+		}
+		if(arb.hasRightChild()) {
+			cant+=countTrees(arb.getRightChild());
+		}
+		
+		if((arb.hasLeftChild() && !arb.hasRightChild()) || (!arb.hasLeftChild() && arb.hasRightChild())){
+			cant++;
+		}
+		
+		return cant;
 	}
+	
+	
+	public boolean isLeftTree(int num) {
+		BinaryTree<Integer> tree = this.getNum(num);		
+		int cantL=-1; int cantR=-1;
+		
+		if(tree.hasLeftChild()) {
+			cantL = this.countTrees(tree.getLeftChild());
+		}
+		
+		if(tree.hasRightChild()) {
+			cantR = this.countTrees(tree.getRightChild());
+		}
+		
+		return cantL>cantR;
+	}
+	
 	
 	public static void main(String[] args) {
 		BinaryTree<Integer> arb = new BinaryTree<Integer>(2);
@@ -49,7 +77,7 @@ public class ParcialArboles {
                 
         
         ParcialArboles ar = new ParcialArboles(arb);
-        System.out.println(ar.getNum(18));
+        System.out.println(ar.isLeftTree(7));
 	}
 	
 }
