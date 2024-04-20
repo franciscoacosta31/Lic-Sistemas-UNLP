@@ -49,6 +49,14 @@ var
             cantMails:= 3;
         end;
         write(mae,regm);
+        with regm do begin
+            nro_usuario:= 4;
+            nom_usuario:= 'cuatro';
+            nombre:= 'nomcuatro';
+            apellido:= 'apecuatro';
+            cantMails:= 4;
+        end;
+        write(mae,regm);
         close(mae);
     end;
 
@@ -61,12 +69,6 @@ var
             nro_usuario:= 1;
             cuentaDestino:= 'cuentaDos'; 
             cuerpoMensaje:= 'uno,dos';
-        end;
-        write(det,regd);
-        with regd do begin
-            nro_usuario:= 2;
-            cuentaDestino:= 'cuentaTres'; 
-            cuerpoMensaje:= 'dos,tres';
         end;
         write(det,regd);
         with regd do begin
@@ -92,17 +94,29 @@ var
             regd.nro_usuario:= valoralto;
     end;
 
-    procedure actualizarMaestro(var mae:maestro; var det:detalle);
-    var mails: integer;
+    procedure leerM(var mae:maestro; var regm:reg_mae);
     begin
+        if(not eof(mae)) then read(mae,regm)
+        else regm.nro_usuario:= valoralto;
+    end;
+
+    procedure actualizarMaestro(var mae:maestro; var det:detalle);
+    var mails: integer; texto:text;
+    begin
+        // inciso ii
+        assign(texto,'incisoii.txt'); rewrite(texto);
         reset(mae); reset(det);
         leer(det,regd);
         while(regd.nro_usuario <> valoralto)do
         begin
-            read(mae,regm);
+            regm.nro_usuario:= -1;
             while(regm.nro_usuario <> regd.nro_usuario) do
+            begin
                 read(mae,regm);
-            mails:= 1;
+                if(regm.nro_usuario <> regd.nro_usuario) then
+                    with regm do writeln(texto,nro_usuario,' ',cantMails);
+            end;
+            mails:= 0;
             while(regd.nro_usuario = regm.nro_usuario) do
             begin
                 mails:=mails+1;
@@ -111,14 +125,37 @@ var
             writeln('Cant mails enviados por user ',regm.nro_usuario,' antes:',regm.cantMails);
             regm.cantMails:= regm.cantMails + mails;
             writeln('Cant mails enviados por user ',regm.nro_usuario,' ahora:',regm.cantMails);
+            with regm do writeln(texto,nro_usuario,' ',cantMails);
             seek(mae,filepos(mae)-1);
             write(mae,regm);
         end;
-        close(mae); close(det);
+        while(not eof(mae)) do
+        begin
+            with regm do writeln(texto,nro_usuario,' ',cantMails);
+            read(mae,regm);
+        end;
+        close(mae); close(det); close(texto);
+    end;
+
+    //inciso i
+    procedure cargarTexto(var mae:maestro);
+    var texto:text;
+    begin
+        assign(texto,'incisoi.txt');
+        rewrite(texto); reset(mae);
+        leerM(mae,regm);
+        while(regm.nro_usuario <> valoralto) do
+        begin
+            with regm do
+                writeln(texto, nro_usuario,' ',cantMails);
+            leerM(mae,regm);
+        end;
+        close(texto); close(mae);
     end;
 
 begin
     cargarMaestro(mae);
     cargarDetalle(det);
     actualizarMaestro(mae,det);
+    cargarTexto(mae); // Inciso i
 end.
