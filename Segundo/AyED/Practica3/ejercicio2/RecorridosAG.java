@@ -7,48 +7,51 @@ public class RecorridosAG {
 	
 	public List<Integer> numerosImparesMayoresQuePreOrden(GeneralTree <Integer> a, Integer n){
 		List<Integer> lista = new LinkedList<Integer>();
-		numerosImparesMayoresQuePreOrden(a,n,lista);
+		if(a.isEmpty()) return lista;
+		numerosImparesMayoresQuePreOrdenHelper(a,n,lista);
 		return lista;
 	}
 	
-	private void numerosImparesMayoresQuePreOrden(GeneralTree<Integer> a, Integer n, List<Integer> lista){
+	private void numerosImparesMayoresQuePreOrdenHelper(GeneralTree<Integer> a, Integer n, List<Integer> lista){
 		int dato = a.getData();
 		if(dato%2!=0 && dato>n)
 			lista.add(dato);
 		List<GeneralTree<Integer>> children = a.getChildren();
 		for(GeneralTree<Integer> child: children) {
-			numerosImparesMayoresQuePreOrden(child,n,lista);
+			numerosImparesMayoresQuePreOrdenHelper(child,n,lista);
 		}
 	}
 	
 	public List<Integer> numerosImparesMayoresQueInOrden(GeneralTree<Integer> a, Integer n){
 		List<Integer> lista = new LinkedList<Integer>();
-		numerosImparesMayoresQueInOrden(a,n,lista);
+		if(a.isEmpty()) return lista;
+		numerosImparesMayoresQueInOrdenHelper(a,n,lista);
 		return lista;
 	}
 	
-	private void numerosImparesMayoresQueInOrden(GeneralTree<Integer> a, Integer n, List<Integer> lista) {
+	private void numerosImparesMayoresQueInOrdenHelper(GeneralTree<Integer> a, Integer n, List<Integer> lista) {
 		List<GeneralTree<Integer>> children = a.getChildren();
 		if(a.hasChildren()) {
-			numerosImparesMayoresQueInOrden(children.get(0),n,lista);
+			numerosImparesMayoresQueInOrdenHelper(children.get(0),n,lista);
 		}
 		int dato = a.getData();
 		if(dato%2!=0 && dato>n) lista.add(dato);
 		for(int i=1; i<children.size(); i++) {
-			numerosImparesMayoresQueInOrden(children.get(i),n,lista);
+			numerosImparesMayoresQueInOrdenHelper(children.get(i),n,lista);
 		}
 	}
 	
 	public List<Integer> numerosImparesMayoresQuePostOrden(GeneralTree<Integer> a, Integer n){
 		List<Integer> lista = new LinkedList<Integer>();
-		numerosImparesMayoresQuePostOrden(a,n,lista);
+		if(a.isEmpty()) return lista;
+		numerosImparesMayoresQuePostOrdenHelper(a,n,lista);
 		return lista;
 	}
 	
-	private void numerosImparesMayoresQuePostOrden(GeneralTree<Integer> a, Integer n, List<Integer> lista) {
+	private void numerosImparesMayoresQuePostOrdenHelper(GeneralTree<Integer> a, Integer n, List<Integer> lista) {
 		List<GeneralTree<Integer>> children = a.getChildren();
 		for(GeneralTree<Integer> child:children) {
-			numerosImparesMayoresQuePostOrden(child,n,lista);
+			numerosImparesMayoresQuePostOrdenHelper(child,n,lista);
 		}
 		int dato = a.getData();
 		if(dato %2 != 0 && dato>n) lista.add(dato);

@@ -129,6 +129,7 @@ public class GeneralTree<T>{
 	
 	
 	public int altura() {	 
+		if(this.isEmpty()) return 0;
 		return alturaHelper();
 	}
 	
