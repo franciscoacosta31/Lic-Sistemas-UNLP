@@ -1,0 +1,24 @@
+1 1 1 1 1000
+uno
+uno
+uno
+2 2 2 2 2000
+dos
+dos
+dos
+2 3 2 3 250
+dos
+dos
+dos
+4 4 4 4 400
+cua
+cua
+cua
+5 5 5 5 500
+cin
+cin
+cin
+5 5 5 6 5000
+cin
+cin
+cin

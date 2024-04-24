@@ -1,0 +1,2 @@
+ dos dos 2250
+ cin cin 5500

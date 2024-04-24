@@ -1,0 +1,8 @@
+0 100 5 10 cero
+ccero
+1 50 90 11 uno
+uuno
+2 20 35 22 dos
+ddos
+3 40 35 33 tres
+ttres
