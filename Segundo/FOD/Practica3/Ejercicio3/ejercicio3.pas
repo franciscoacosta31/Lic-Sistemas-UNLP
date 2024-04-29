@@ -2,7 +2,7 @@ program ejercicio3;
 type
     novela = record
         codigo:integer;
-        genero:string;
+        genero:integer;
         nombre:string;
         duracion:integer;
         director:string;
@@ -39,47 +39,50 @@ var arch:archivo; reg:novela;
         Assign(arch,nom);
         rewrite(arch);
         
-        // creo el registro cabecera
+        // inicio el registro cabecera
         reg.codigo:= 0;
-        write(arch,reg);
-
         // creo los demas registros
         while(reg.codigo <> -1) do
         begin
-            leer(reg);
             write(arch,reg);
+            leer(reg);
         end;
 
         close(arch);
     end;
 
     procedure RealizarAlta(var arch:archivo);
-    var cabecera,reg_vacio:reg; 
+    var cabecera,reg_vacio:novela; 
     begin
         reset(arch);
 
         leer(reg);
-        read(arch,cabecera);
-        if(cabecera.codigo <> 0) then
+        if (not eof(arch)) then
         begin
-            //accedo a la primera posición vacía
-            seek(arch,cabecera.codigo*-1);
+            read(arch,cabecera);
+            if(cabecera.codigo <> 0) then
+            begin
+                //accedo a la primera posición vacía
+                seek(arch,cabecera.codigo*-1);
 
-            //guardo el registro vacio y sobreescribo el nuevo 
-            read(arch,reg_vacio);
-            seek(arch,filepos(arch)-1);
-            write(arch,reg);
+                //guardo el registro vacio y sobreescribo el nuevo 
+                read(arch,reg_vacio);
+                seek(arch,filepos(arch)-1);
+                write(arch,reg);
 
-            //actualizo el reg cabecera con el proximo vacío
-            seek(arch,0);
-            write(arch,reg_vacio);
-        end
+                //actualizo el reg cabecera con el proximo vacío
+                seek(arch,0);
+                write(arch,reg_vacio);
+            end
+            else
+            begin
+                //si no hay registros vacíos, agrego al final
+                seek(arch,filesize(arch));
+                write(arch,reg);
+            end;
+        end    
         else
-        begin
-            seek(arch,filesize(arch));
-            write(arch,reg);
-        end;
-
+            writeln('El archivo esta vacio');
         close(arch);
     end;
 
@@ -95,7 +98,7 @@ var arch:archivo; reg:novela;
             read(arch,reg);
         end;
 
-        //Si existe la novela con ese código, vuelve a leer los datos
+        //Si existe la novela con ese código, leer los datos restantes
         if(reg.codigo = reg_buscar.codigo) then
         begin
             writeln('Ingrese el genero');
@@ -110,12 +113,44 @@ var arch:archivo; reg:novela;
             readln(reg.precio);
 
             //Guardo los cambios
-            seek(arch,filepos(mae)-1);
+            seek(arch,filepos(arch)-1);
             write(arch,reg);
             writeln('Novela modificada con exito');
         end
         else writeln('No existe la novela con ese codigo');
 
+        close(arch);
+    end;
+
+    procedure EliminarNovela(var arch:archivo);
+    var cod:integer; reg_cabecera:novela; reg:novela; pos:integer;
+    begin
+        reset(arch);
+        //Se ingresa el cod de la novela a eliminar
+        writeln('Ingrese el codigo de la novela a eliminar');    
+        readln(cod);
+
+        //Guardo el reg cabecera
+        read(arch,reg_cabecera);
+        
+        reg.codigo:= reg_cabecera.codigo;
+        //Busco la novela a eliminar
+        while(cod <> reg.codigo) do
+            read(arch,reg);
+        if(cod = reg.codigo) then
+        begin
+            //Guardo en la pos eliminada el reg cabecera
+            pos:= filepos(arch)-1;
+            seek(arch,pos);
+            write(arch,reg_cabecera);
+
+            //Actualizo el reg cabecera con el nuevo espacio libre
+            reg_cabecera.codigo:= pos*-1;
+            seek(arch,0);
+            write(arch,reg_cabecera);
+        end
+        else
+            writeln('No se encontro la novela con el codigo ',cod);
         close(arch);
     end;
 
@@ -133,25 +168,52 @@ var arch:archivo; reg:novela;
             case opcion of
                 1: RealizarAlta(arch);
                 2: ModificarNovela(arch);
+                3: EliminarNovela(arch);
                 4: break;
             end;
         end;
     end;
 
-var opcion:integer;
+    procedure ListarEmpleados(var arch:archivo);
+    var texto:text; reg:novela;
+    begin
+        assign(texto,'novelas.txt');
+        rewrite(texto);reset(arch);
+        
+        read(arch,reg);
+        while(not eof(arch))do
+        begin
+            if(reg.codigo > 0)then
+            begin
+                with reg do begin
+                    writeln(texto,codigo,' ',duracion,' ',precio:0:2,' ',genero,nombre);
+                    writeln(texto,director);
+                end;
+            end
+            else
+                //Si es una posición vacía, carga el código
+                with reg do writeln(texto,codigo);
+            read(arch,reg);
+        end;
+        close(arch); close(texto);
+    end;
+
+var
+    opcion:integer;
 begin
     while(true) do
     begin
         writeln('Ingrese la operacion a realizar');
         writeln('1 = Crear el archivo');
         writeln('2 = Abrir el archivo');
-        writeln('9 = Cerrar programa');
+        writeln('3 = Listar empleados');
+        writeln('4 = Cerrar programa');
         readln(opcion);
         case opcion of
             1: CrearArchivo(arch);
             2: AbrirArchivo(arch);
             3: ListarEmpleados(arch);
-            9: break;
+            4: break;
         end;
     end;
 end.
