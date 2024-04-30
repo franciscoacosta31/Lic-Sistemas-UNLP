@@ -1,4 +1,5 @@
 program ejercicio3;
+
 type
     novela = record
         codigo:integer;
@@ -135,7 +136,7 @@ var arch:archivo; reg:novela;
         
         reg.codigo:= reg_cabecera.codigo;
         //Busco la novela a eliminar
-        while(cod <> reg.codigo) do
+        while(not eof(arch))and(cod <> reg.codigo) do
             read(arch,reg);
         if(cod = reg.codigo) then
         begin
@@ -180,9 +181,12 @@ var arch:archivo; reg:novela;
         assign(texto,'novelas.txt');
         rewrite(texto);reset(arch);
         
+        //Salteo reg cabecera
         read(arch,reg);
+
         while(not eof(arch))do
         begin
+            read(arch,reg);
             if(reg.codigo > 0)then
             begin
                 with reg do begin
@@ -193,7 +197,6 @@ var arch:archivo; reg:novela;
             else
                 //Si es una posición vacía, carga el código
                 with reg do writeln(texto,codigo);
-            read(arch,reg);
         end;
         close(arch); close(texto);
     end;
