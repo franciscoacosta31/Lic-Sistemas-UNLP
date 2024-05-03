@@ -30,6 +30,7 @@ var mae:maestro; cod:codigo;
             stock:=10;
             precio_unitario:=10.0;
         end;
+        write(mae,regm);    
         with regm do
         begin
             cod_prenda:=30;
@@ -39,7 +40,6 @@ var mae:maestro; cod:codigo;
             stock:=30;
             precio_unitario:=30.0;
         end;
-        write(mae,regm);    
         write(mae,regm);
         with regm do
         begin
@@ -55,7 +55,7 @@ var mae:maestro; cod:codigo;
         close(mae);
     end;
 
-    procedure cargarCodigo(var cod:codigo);
+    procedure cargarCodigos(var cod:codigo);
     begin
         //Creo y abro el archivo
         assign(cod,'codigo.dat');
@@ -78,9 +78,10 @@ var mae:maestro; cod:codigo;
             read(cod,num);
 
             //Busco en el archivo maestro la prenda con ese codigo
-            while(not eof(mae))and(cod <> regm.cod_prenda)do
+            read(mae,regm);
+            while(not eof(mae))and(num <> regm.cod_prenda)do
                 read(mae,regm);
-            if(cod = regm.cod_prenda) then
+            if(num = regm.cod_prenda) then
             begin
                 regm.stock:= regm.stock*-1;
                 seek(mae,filepos(mae)-1);          
@@ -89,14 +90,38 @@ var mae:maestro; cod:codigo;
         end;
         //Cierro los archivos
         close(mae);close(cod);
-        
+    end;
+
+    procedure nuevoArchivo(var mae:maestro);
+    var
+        archivo:maestro; regm:prenda;
+    begin
+        //Le asigno al nuevo archivo un nombre
+        Assign(archivo,'nombre_generico.dat');
+        //Abro los archivos
+        reset(mae); rewrite(archivo);
+
+        while(not eof(mae))do
+        begin
+            //Leo registro del archivo maestro
+            read(mae,regm);      
+            //Si no se realizó una baja lógica del registro, lo agrego      
+            if(regm.stock > 0) then
+              write(archivo,regm);
+        end;
+
+        //Cierro los archivos
+        close(mae);close(archivo);
+        //Renombro el nuevo archivo con el nombre del archivo maestro
+        rename(archivo,'maestro.dat');
     end;
 
 begin
     //Se dispone
     cargarMaestro(mae);
     cargarCodigos(cod);
-    //
+    //Recorro los archivos realizando las bajas logicas
     modificarStock(mae,cod);
-
+    //Realizo la baja fisica
+    nuevoArchivo(mae);
 end.
