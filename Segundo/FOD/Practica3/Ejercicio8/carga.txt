@@ -1,0 +1,6 @@
+10 carga1
+30 carga3
+50 carga5
+20 carga2
+150 carga15
+40 carga4

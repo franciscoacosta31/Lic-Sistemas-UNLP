@@ -1,3 +1,10 @@
-1 1 1 1 uno
-3 3 3 3 tres
-2 2 2 2 dos
+1 Kakapo
+8 Condor
+3 Aguila
+7 Albatros
+10 Guacamayo
+6 Pardela
+4 Carpintero
+2 Ibis
+9 Quetzal
+5 Pinguino
