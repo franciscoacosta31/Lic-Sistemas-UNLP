@@ -1,0 +1,2 @@
+Se realia una búsqueda de un DNI >= a 40.000.000 y cuando se lo encuentra en una hoja, se avanza en la lista mientras el dni sea menor a 40.000.000.
+La ventaja que tiene con respecto a los árboles B es la búsqueda secuencial rápida que se puede hacer, no es necesario acceder a nodos internos una vez llegado a una hoja.

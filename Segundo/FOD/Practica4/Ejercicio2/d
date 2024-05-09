@@ -1,0 +1,1 @@
+Se realiza la búsqueda en el archivo de indices comparando el dni con el contenido del campo claves y accediendo a los nodos correspondientes. Si se encuentra el dni buscado, se obtiene el índice que nos indica donde se encuentra el registro en el archivo de alumnos.

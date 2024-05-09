@@ -1,0 +1,5 @@
+Errores:
+- Pos no está declarado
+- No indica de que tipo son los parámetros del procedimiento
+- En if NRR = null deberia ser " if NRR = -1 ""
+- etc. 

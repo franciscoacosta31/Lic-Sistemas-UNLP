@@ -1,0 +1,1 @@
+Al almacenar el registro completo se ocupa mas espacio en cada registro, por lo que la cantidad de registros que entran en un nodo disminuye. Es decir, el orden es menor.

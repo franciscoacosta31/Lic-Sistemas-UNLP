@@ -1,0 +1,1 @@
+En el peor de los casos se realizan h búsquedas siendo h la altura del arbol (El nodo buscado es una hoja). En el mejor caso se realiza una búsqueda (El nodo buscado es la raíz).

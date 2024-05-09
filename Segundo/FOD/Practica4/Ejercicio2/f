@@ -1,0 +1,1 @@
+El problema de este tipo de búsqueda es que en los arboles B no hay buena búsqueda secuencial rápida, una mejor opción sería utilizar un árbol B+.

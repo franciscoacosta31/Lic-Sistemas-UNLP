@@ -1,0 +1,3 @@
+- No lo va a encontrar en el archivo de índices ya que el dato que contiene el mismo es únicamente el dni, además daría error al intentar comparar un string con un entero.
+- Debería buscarlo secuencialmente en el archivo de alumnos.
+- Para brindar acceso indizado al archivo de alumnos por número de legajo se debe crear un nuevo archivo de índices el cual se debe ordenar por legajo. 

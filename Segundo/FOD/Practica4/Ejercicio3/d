@@ -1,0 +1,1 @@
+Se va comparando el DNI con las claves de los registros del archivo de índices hasta llegar a un nodo hoja en el que se determinará si se encuentra el dni buscado recorriendolo. Puede ocurrir que se encuentra el dni en un nodo interno, pero se debe seguir buscando hasta llegar a una hoja.

@@ -1,0 +1,1 @@
+Si realizo la búsqueda por un criterio diferente al que está ordenado, no aprovecharía el orden del árbol, por lo que el peor de los casos sería leer todos los nodos hasta encontrar o no el alumno buscado.

@@ -1,0 +1,1 @@
+Los nodos hojas de un árbol B+ tienen la caracteristica de permitir un recorrido secuencial rápido, ya que los mismos se encuentran enlazados en una lista.

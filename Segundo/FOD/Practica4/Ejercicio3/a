@@ -1,0 +1,1 @@
+En un árbol B+ todos los elementos que se encuentran en el archivo están en las hojas, en los nodos internos hay copias de las hojas que se utilizan como separadores.
