@@ -1,0 +1,7 @@
+A- Asumiendo que la función random funcione correctamente, ninguno de los tres algoritmos podría quedar en un loop infinito, todos terminarian.
+B-	
+	1- Este algoritmo va rellenando de a uno las posiciones de un vector cuando encuentra un número que no está cargado. El primer for itera n veces, el while itera hasta que x sea igual a un número random que no se encuentre en el vector. El último for itera hasta encontrar "x" en el vector o cuando se termine de recorrerlo.
+	2- Este algoritmo utiliza un vector auxiliar para guardar un booleano que representa si el número en una posición ya se cargó en el vector de permutaciones, primero inicia todas los elementos en false.
+	   Por cada posción del vector "a" se genera un número random hasta que el mismo no se encuentre en el vector, verificandolo mediante el vector auxiliar.
+	   Este algoritmo es mucho más eficiente que el primero ya que al generar un número random verifica directamente si se encuentra en el vector en vez de recorrerlo hasta encontrarlo o llegar al final.
+	3- Este algoritmo es el más eficiente de todos ya que inicia el vector cargado en órden y lo único que hace es por cada posición del vector, intercambiar su contenido con una posición random. El órden del algoritmo es lineal.
