@@ -1,0 +1,45 @@
+Árbol B+ orden 6 política de resolución de underflows derecha.
++159, -5, -190
+
+                    2:0(10)1(60)3(115)4(145)5(179)6
+
+0:(1)(5)1   1:(34)(44)3  3:(60)(113)4  4:(120)(125)(131)(139)5  5:(145)(153)(158)(160)(177)6  6:(179)(190)-1
+
+-----------------------------------------------------------------------------------------------------------------------
++159:
+- Intento insertar la clave 159 en el nodo 5, se produce overflow así que divido y promociono una copia de 
+  la clave del medio a la derecha (159).
+- La promoción de la clave 159 produce overflow en el nodo 2, así que divido y promociono la clave del medio
+  a la derecha (145). Resuelvo como un árbol B ya que el overflow se produjo en un nodo interno.
+- L2, L5, E5, E7, E2, E8, E9.
+
+                                                       9:2(145)5
+
+               2:0(10)1(60)3(115)4                                                   8:5(159)7(179)6
+
+0:(1)(5)1   1:(34)(44)3  3:(60)(113)4  4:(120)(125)(131)(139)5   5:(145)(153)(158)7   7:(159)(160)(177)6  6:(179)(190)-1
+
+-----------------------------------------------------------------------------------------------------------------------
+-5:
+- Intento eliminar la clave 5 del nodo 0, se produce underflow ya que el nodo posee la mínima cantidad de elementos,
+  intento redistribuir con el hermano adyacente derecho pero no se puede ya que este también tiene la mínima cantidad
+  de elementos, asi que fusiono.
+- L9, L2, L0, L1, E0, E2.
+
+                                              9:2(145)5
+
+               2:0(60)3(115)4                                              8:5(159)7(179)6
+
+0:(1)(34)(44)3  3:(60)(113)4  4:(120)(125)(131)(139)5   5:(145)(153)(158)7   7:(159)(160)(177)6  6:(179)(190)-1
+
+-----------------------------------------------------------------------------------------------------------------------
+-190:
+- Intento eliminar la clave 190 del nodo 6, se produce underflow ya que el nodo posee la mínima cantidad de elementos,
+  no tiene hermano derecho asi que intento redistribuir con el hermano izquierdo, elimino el separador 179 porque no
+  sirve y subo una copia del 177 como separador.
+
+                                             9:2(145)5
+
+                 2:0(60)3(115)4                                        8:5(159)7(177)6
+
+0:(1)(34)(44)3  3:(60)(113)4  4:(120)(125)(131)(139)5   5:(145)(153)(158)7   7:(159)(160)6  6:(177)(179)-1

@@ -1,0 +1,58 @@
+Árbol B orden 4 política derecha para la resolución de underflows
++260, -310, -490, -60.
+
+            2:0(100)1(310)4(600)3 
+
+0:(60)  1:(160)(210)(240) 4:(420)(490) 3: (800)
+
+---------------------------------------------------------------------------------------------
++260:
+- Intento insertar la clave 260 en el nodo 1, se produce overflow así que divido y promociono
+  la clave de medio a la derecha (240).
+- La promoción produce overflow en el nodo 1, asi que divido y promociono la clave del medio
+  a la derecha (310), aumenta la altura del árbol en 1.
+- L2, L1, E1, E5, E2, E6, E7.
+
+                      7:2(310)6
+
+        2:0(100)1(240)5         6:4(600)3 
+
+0:(60)  1:(160)(210) 5:(260)  4:(420)(490) 3: (800)
+
+---------------------------------------------------------------------------------------------
+-310:
+- Al encontrarse la clave en un nodo interno, la intercambio con la menor clave del subárbol
+  derecho para poder eliminarla.
+- L7, L6, L4, E4, E7.
+
+                      7:2(420)6
+
+        2:0(100)1(240)5         6:4(600)3 
+
+0:(60)  1:(160)(210) 5:(260)  4:(490) 3: (800)
+
+---------------------------------------------------------------------------------------------
+-490:
+- Intento eliminar la clave 490 del nodo 4, se produce underflow asi que intento redistribuir
+  con el hermano derecho, tiene la mínima cantidad de claves por lo que fusiono.
+- La fusión en el nodo 4 produce underflow en el nodo 6, como no tiene hermano derecho
+  intento redistribuir con el hermano adyacente izquierdo, se puede y reacomodo los punteros.
+- L7, L6, L4, L3, E4, L2, E2, E6, E7.
+
+                 7:2(240)6
+
+        2:0(100)1          6:5(420)4 
+
+0:(60)  1:(160)(210)   5:(260)  4:(600)(800)
+
+---------------------------------------------------------------------------------------------
+-60:
+- Intento eliminar la clave 60 del nodo 6, se produce underflow asi que intento redistribuir
+  con el hermano adyacente derecho, puedo.
+- L7, L2, L0, L1, E0, E1, E2.
+
+                 7:2(240)6
+
+        2:0(160)1          6:5(420)4 
+
+0:(100)  1:(210)      5:(260)  4:(600)(800)

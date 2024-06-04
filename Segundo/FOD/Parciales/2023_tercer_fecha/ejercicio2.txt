@@ -1,0 +1,61 @@
+Árbol B orden 4 política de resolución de underflows derecha o izquierda.
++410, -200, -500, -100.
+
+        2:0(100)4(300)1(600)3
+
+0:(10)  4:(200)  1:(400)(450)(500)  3:(700)
+
+------------------------------------------------------------------------------------------------
++410: 
+- Intento insertar la clave 410 en el nodo 1, se produce overflow por lo que divido y promociono
+  la clave de medio a la derecha (450).
+- Al promocionar la clave 450 se produce overflow en el nodo 2, asi que divido y promociono la
+  clave del medio a la derecha (450).
+- L2, L1, E1, E5, E2, E6, E7.
+
+                     7:2(450)6
+
+    2:0(100)4(300)1               6:5(600)3
+
+0:(10)  4:(200)  1:(400)(410)   5:(500)  3:(700)
+
+------------------------------------------------------------------------------------------------
+-200:
+- Intento eliminar la clave 200 del nodo 4, se produce underflow ya que el nodo tiene la minima
+  cantidad de elementos, intento redistribuir con el hermano adyacente derecho, puedo.
+- L7, L2, L4, L1, E4, E1, E2.
+
+                   7:2(450)6
+
+    2:0(100)4(400)1           6:5(600)3
+
+0:(10)  4:(300)  1:(410)    5:(500)  3:(700)
+
+------------------------------------------------------------------------------------------------
+-500:
+- Intento eliminar la clave 500 del nodo 5, se produce underflow ya que el nodo tiene la minima
+  cantidad de elementos, intento redistribuir con el hermano derecho y no puedo, no tiene
+  hermano izquierdo asi que fusiono con el hermano derecho y el padre.
+- La fusion produce underflow en el nodo 6, como no tiene hermano derecho, intento redistribuir
+  con el hermano izquierdo, puedo.
+- L7, L6, L5, L3, E5, L2, E2, E6, E7.
+
+               7:2(400)6
+
+    2:0(100)4            6:1(450)5
+
+0:(10)  4:(300)      1:(410)    5:(600)(700)
+
+------------------------------------------------------------------------------------------------
+-100:
+- Llevo la clave 100 a un nodo terminal para poder eliminarla, para hacerlo la intercambio con
+  la menor clave del subárbol derecho (300).
+- Intento eliminar la clave 100 del nodo 4, se produce underflow por lo que intento redistribuir
+  con el hermano izquierdo ya que no tiene hermano derecho, como no puedo, fusiono.
+- Se produce underflow en el nodo 2 así que intento redistribuir con el hermano derecho, no
+  puedo asi que fusiono con el hermano derecho decrementando en uno la altura del árbol.
+- L7, L2, L4, L0, E0, L6, E2.
+
+          2:0(400)1(450)5
+
+0:(10)(300)      1:(410)    5:(600)(700)

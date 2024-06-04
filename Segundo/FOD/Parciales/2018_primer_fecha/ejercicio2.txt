@@ -1,0 +1,76 @@
+Árbol B+ orden 4 política de resolución de underflows a derecha.
++100, -540, -67, -422, -445, -556.
+
+                   2:0(241)1(422)3(540)4
+
+0:(3)(35)(67)1  1:(241)(300)(329)3  3:(422)(445)4  4:(556)(600)-1
+
+-------------------------------------------------------------------------------------
++100:
+- Intento insertar la clave 100 en el nodo 0, se produce overflow así que divido
+  y promociono una copia de la clave del medio a la derecha (67).
+- Al promocionar la copia de la clave 67 se produce overflow en el nodo 2, como se
+  trata de un nodo interno, se resuelve como un árbol B, por ende divido y promociono
+  la clave del medio a la derecha (422) aumentando la altura del árbol.
+- L2, L0, E0, E5, E2, E6, E7. 
+
+                                   7:2(422)6
+
+            2:0(67)5(241)1                              6:3(540)4
+
+0:(3)(35)5   5:(67)(100)1  1:(241)(300)(329)3  3:(422)(445)4  4:(556)(600)-1
+
+-------------------------------------------------------------------------------------
+-540:
+- La clave no se encuentra en un nodo terminal, por ende no pertenece al archivo.
+- L7, L6, L4.
+
+-------------------------------------------------------------------------------------
+-67:
+- Elimino la clave 67 del nodo 5, no se elimina el separador porque sigue sirviendo.
+- L7, L2, L5, E5.
+
+                                   7:2(422)6
+
+            2:0(67)5(241)1                          6:3(540)4
+
+0:(3)(35)5   5:(100)1  1:(241)(300)(329)3  3:(422)(445)4  4:(556)(600)-1
+
+-------------------------------------------------------------------------------------
+-422:
+- Elimino la clave 422 del nodo 3 sin problemas, no se elimina el separador.
+- L7, L6, L3, E3.
+
+                                7:2(422)6
+
+            2:0(67)5(241)1                      6:3(540)4
+
+0:(3)(35)5   5:(100)1  1:(241)(300)(329)3  3:(445)4  4:(556)(600)-1
+
+-------------------------------------------------------------------------------------
+-445:
+- Intento eliminar la clave 445 del nodo 3, se produce underflow por lo que
+  redistribuyo con el hermano adyacente derecho.
+- Subo una copia del 600 para utilizarla como separador ya que el 540 no sirve.
+- L7, L6, L3, L4, E3, E4, E6.
+
+                               7:2(422)6
+
+            2:0(67)5(241)1                    6:3(600)4
+
+0:(3)(35)5   5:(100)1  1:(241)(300)(329)3  3:(556)4  4:(600)-1
+
+-------------------------------------------------------------------------------------
+-556:
+- Intento eliminar la clave 556 del nodo 3, se produce underflow y como no puedo
+  redistribuir con el hermano derecho, fusiono. Se libera el nodo 4.
+- La fusión en el nodo 3 produce underflow en el nodo 6, como se trata de un nodo
+  interno lo resuelvo como un árbol B, asi que redistribuyo con el hermano adyacente 
+  izquierdo y reacomodo los punteros.
+- L7, L6, L3, L4, E3, L2, E2, E6, E7.
+
+                  7:2(241)6
+
+      2:0(67)5                  6:1(422)3
+
+0:(3)(35)5   5:(100)1  1:(241)(300)(329)3  3:(600)-1
