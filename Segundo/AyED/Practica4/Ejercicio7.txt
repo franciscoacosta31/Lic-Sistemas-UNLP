@@ -1,0 +1,49 @@
+Para cada uno de los siguientes fragmentos de código, calcule, intuitivamente, el orden del tiempo de
+ejecución.
+
+A- for(int i = 0; i< n; i++)
+    sum++;
+El for se ejecuta n+1 veces, por ende es de O(n)
+
+B- for(int i = 0; i< n; i+=2)
+    sum++;
+Como la variable i se va aumentando de a dos hasta llegar al valor de n, el órden va a ser O(N/2).
+Demostración
+paso 1 i = 0
+paso 2 i = 2
+paso 3 i = 4
+paso 4 i = 6
+paso k i = 2k-2
+sale cuando 2(k-1)>=n
+2k-2 >= n
+k >= (n+2)/2
+
+C- for(int i = 0; i< n; i++)
+    for(int j = 0; j< n; j++)
+     sum++;
+El primer for itera n veces, el segundo for itera N veces. N iteraciones * N iteraciones = O(N^2)
+
+D- for(int i = 0; i < n + 100; ++i) {
+    for(int j = 0; j < i * n ; ++j){
+     sum = sum + j;
+     }
+    for(int k = 0; k < n + n + n; ++k){
+     c[k] = c[k] + sum;
+     }
+    }
+El primer for itera n+100 veces, el segundo for itera i*n veces, el tercer for itera 3n veces, O(N^3).
+
+E- for(int i = 0; i< n; i++)
+    for(int j = 0; j< n; j++)
+     sum++;
+   for(int i = 0; i< n; i++)
+    sum++;
+El primer for itera n veces, el segundo for itera n veces y el tercer for itera n veces.
+n*n + n = O(N^2)
+
+F- int i,j;
+   int x = 1;
+   for (i = 0; i <= n^2; i=i+2)
+    for (j = n; j >= 1; j-= n/4)
+     x++;
+El primer for itera n^2 veces, el segundo for itera log_2(n) veces. O(N^2 * log_2(n))
