@@ -51,6 +51,8 @@ Paso 1: se ejecuta 1 vez
 Paso 2: se ejecuta 2 veces.
 Paso i: se ejecuta i veces.
 
-      n/2  i      n/2
-T(n) = Σ ( Σ c ) = Σ (i*c) = c * Σ
-      i=1 j=1     i=1
+      n/2  i      n/2           n/2
+T(n) = Σ ( Σ c ) = Σ (i*c) = c * Σ i = c * ((n/2)*(n/2+1) / 2) =  
+      i=1 j=1     i=1           i=1
+
+T(n) = c * ((n^2/4 + n/2) / 2)
