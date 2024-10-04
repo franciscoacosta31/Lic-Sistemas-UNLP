@@ -8,10 +8,8 @@
 # "-i": Imprime todos los elementos del arreglo en pantalla
 
 arreglo=()
-
-for i in $(cut -d : -f1 /etc/passwd); do
-	arreglo+=("$i")
-done
+ 
+arreglo=($(cat /etc/group | grep -w users | cut -d : -f4 | tr "," " "))
 
 case $1 in
 	-b)
