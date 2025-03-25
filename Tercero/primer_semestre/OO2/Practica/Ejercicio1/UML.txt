@@ -1,0 +1,40 @@
+@startuml
+abstract class Publicacion
+class Tweet extends Publicacion
+class Retweet extends Publicacion {
+  -origen : Tweet
+  +Retweet(origen : Tweet, dueño : Usuario): Retweet
+  +eliminar()
+}
+class Usuario {
+  -screenName : String
+  -publicaciones: List<Publicacion>
+  +Usuario(nombre : String) : Usuario
+  +publicarTweet(texto : String)
+  +publicarReTweet(tweetOrigen : Tweet)
+  +eliminarPublicaciones()
+  +eliminarPublicacion()
+}
+class Tweet {
+  -texto : String
+  -dueño : Usuario
+  -retweets : List<Retweet>
+  +Tweet(texto : String) : Tweet
+  +eliminar()
+  +agregarRetweet(retweet : Retweet)
+}
+note right : "El string tiene como mínimo 1 caracter y como máximo 280"
+class Twitter {
+  -usuarios: List<Usuario> 
+  -buscarUsuario(nombre : String) : Usuario
+  +agregarUsuario(nombre : String) : Boolean
+  +eliminarUsuario(nombre : String) : Boolean
+}
+
+Usuario -> Publicacion
+Twitter -> Usuario
+Tweet -> Usuario
+Tweet -> Retweet
+Retweet -> Tweet
+Retweet -> Usuario
+@enduml

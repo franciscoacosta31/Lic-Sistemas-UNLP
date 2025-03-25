@@ -1,0 +1,23 @@
+@startuml
+class Juego {
+  +<<create>>Juego(): Juego
+  +seleccionar(nombre : String): Objeto
+  +jugar(objeto1: Objeto, objeto2 : Objeto): Objeto
+}
+abstract class Objeto {
+  #List<Objeto> : ganaContra
+  #List<Objeto> : pierdeContra
+  +<<create>>Objeto() : Objeto
+  +enfrentar(objeto1: Objeto): String
+}
+class Piedra extends Objeto {
+  +<<create>>Piedra(nombre: String): Piedra
+}
+class Papel extends Objeto {
+  +<<create>>Papel(nombre: String): Papel
+}
+class Tijera extends Objeto {
+  +<<create>>Tijera(nombre: String): Tijera
+}
+Juego -> Objeto
+@enduml
