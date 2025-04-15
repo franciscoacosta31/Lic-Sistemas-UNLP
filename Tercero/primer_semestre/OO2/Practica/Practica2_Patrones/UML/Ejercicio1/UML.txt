@@ -1,0 +1,43 @@
+@startuml
+class Biblioteca <<Cliente>> {
++<<create>> Biblioteca() : Biblioteca
++ agregarSocio(socio : Socio): void
++ exportarSocios() : String
++ getExporter() : VoorheesExporter
++ setExporter(exporter : VoorheesExporter) : void
+}
+
+class VoorheesExporter <<Target>> {
++<<create>>VoorheesExporter() : VoorheesExporter
+-exportar(socio : Socio) : String
++exportar(socios : List<Socio>) : String
+}
+
+class Socio {
+- nombre: String
+- legajo : String
+- email : String
++<<create>>Socio(nombre : String, email : String, legajo : String) : Socio
+}
+
+class JsonSimpleAdapter <<Adapter>> {
++<<create>>JsonSimpleExporter() : JsonSimpleExporterAdapter
++exportar(socios : List<Socio>) : String
+}
+
+class JacksonAdapter <<Adapter>> {
++<<create>>JacksonAdapter() : JacksonAdapter
++exportar(socios : List<Socio>) : String 
+}
+
+class JsonSimple <<Adaptee>> {}
+
+class Jackson <<Adaptee>> {}
+
+Biblioteca -> "1..*" Socio
+Biblioteca -> VoorheesExporter
+VoorheesExporter <|-- JsonSimpleAdapter
+VoorheesExporter <|-- JacksonAdapter
+JsonSimpleAdapter --> JsonSimple
+JacksonAdapter --> Jackson
+@enduml
