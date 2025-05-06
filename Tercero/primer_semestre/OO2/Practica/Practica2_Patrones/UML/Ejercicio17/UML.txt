@@ -1,0 +1,21 @@
+@startuml
+interface DatabaseAccess <<Subject>> {
++insertNewRow(rowData : String[*]): Integer
++getSearchResults(queryString : String): String[*]
+}
+class DatabaseRealAccess <<RealSubject>> {
++insertNewRow(rowData : String[*]): Integer
++getSearchResults(queryString : String): String[*]
+}
+class DatabaseProxy <<Proxy>> {
+-password : String
+-logged : Boolean
++insertNewRow(rowData : String[*]): Integer
++getSearchResults(queryString : String): String[*]
++login(password : String): void
+}
+
+DatabaseAccess <|.. DatabaseRealAccess
+DatabaseAccess <|.. DatabaseProxy
+DatabaseProxy -->  DatabaseRealAccess
+@enduml

@@ -1,0 +1,37 @@
+@startuml
+interface FileOO2Interface <<Component>> {
++prettyPrint(): String
+}
+
+class FileOO2 <<ConcreteComponent>> {
++<<create>> FileOO2(nombre: String, extension: String, tamaño: String, fechaCreacion: Date: fechaModificacion: Date, permisos: String): FileOO2
++nombre: String
++extension: String
++tamaño: String
++fechaCreacion: LocalDate
++fechaModificacion: LocalDate
++permisos: String
++prettyPrint(): String
+}
+
+abstract class Decorator <<Decorator>> {
++<<create>>Decorator(component: FileOO2Interface): Decorator
+#componente : FileOO2Interface
++prettyPrint(): String
+}
+
+class DecoratorExtension <<ConcreteDecorator>> {}
+class DecoratorTamaño <<ConcreteDecorator>> {}
+class DecoratorFechaCreacion <<ConcreteDecorator>> {}
+class DecoratorFechaModificacion <<ConcreteDecorator>> {}
+class DecoratorPermisos <<ConcreteDecorator>> {}
+
+FileOO2Interface <|.. FileOO2
+FileOO2Interface <|.. Decorator
+FileOO2Interface <-- Decorator
+Decorator <|-- DecoratorExtension 
+Decorator <|-- DecoratorTamaño
+Decorator <|-- DecoratorFechaCreacion
+Decorator <|-- DecoratorFechaModificacion
+Decorator <|-- DecoratorPermisos
+@enduml

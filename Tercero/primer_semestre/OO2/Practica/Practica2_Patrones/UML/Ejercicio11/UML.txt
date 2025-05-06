@@ -1,0 +1,26 @@
+@startuml
+interface Topografia {
++calcularProporcion(): Double
++esIgual(otro : Topografia): Boolean
+}
+
+class Agua <<Leaf>> {
++calcularProporcion(): Double
++esIgual(otro : Topografia): Boolean
+}
+
+class Tierra <<Leaf>> {
++calcularProporcion(): Double
++esIgual(otro : Topografia): Boolean
+}
+
+class Mixta <<Composite>> {
++calcularProporcion(): Double
++esIgual(otro : Topografia): Boolean
++esIgualHelper(otro : Mixta): Boolean
+}
+
+Topografia <|.. Agua
+Topografia <|.. Tierra
+Topografia <|.. Mixta
+@enduml
