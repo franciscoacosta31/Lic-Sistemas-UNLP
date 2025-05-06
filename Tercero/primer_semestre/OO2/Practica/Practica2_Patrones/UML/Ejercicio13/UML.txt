@@ -1,0 +1,49 @@
+@startuml
+class SandwichDirector <<Director>>{
++<<create>>SandwichDirector(builder: SandwichBuilder): SandwichDirector
++crearSandwich(): Sandwich
+}
+
+abstract class SandwichBuilder <<Builder>> {
++<<create>>SandwichBuilder(): SandwichBuilder
++agregarPan(): void
++agregarAderezo(): void
++agregarPrincipal(): void
++agregarAdicional(): void
+}
+
+class ClasicoBuilder <<ConcreteBuilder>> {
++<<create>>ClasicoBuilder(): ClasicoBuilder
+}
+
+class VegetarianoBuilder <<ConcreteBuilder>> {
++<<create>>VegetarianoBuilder(): VegetarianoBuilder
+}
+
+class VeganoBuilder <<ConcreteBuilder>> {
++<<create>>VeganoBuilder(): VeganoBuilder
+}
+
+class SinTACCBuilder <<ConcreteBuilder>> {
++<<create>>SinTACCBuilder(): SinTACCBuilder
+}
+
+class Sandwich <<Product>> {
+-pan: String
+-precioPan: Integer
+-aderezo: String
+-precioAderezo: Integer
+-principal: String
+-precioPrincipal: Integer
+-adicional: String
+-precioAdicional: Integer
++getPrecioTotal(): Integer
+}
+
+SandwichBuilder <-- SandwichDirector
+SandwichBuilder <|-- ClasicoBuilder
+SandwichBuilder <|-- VegetarianoBuilder
+SandwichBuilder <|-- VeganoBuilder
+SandwichBuilder <|-- SinTACCBuilder
+SandwichBuilder --> Sandwich : producto
+@enduml
