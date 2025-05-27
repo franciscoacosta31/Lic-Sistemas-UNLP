@@ -1,0 +1,55 @@
+@startuml
+class ToDoItem {
+-name: String
+-comments: String[*]
+-time: Duration
+-startDate: LocalDateTime
+-finishDate: LocalDateTime
++<<create>>ToDoItem(name: String): ToDoItem
++changeState(state: ToDoItemState)
++start()
++togglePause()
++finish()
++workedTime(): Duration
++addComment(comment: String)
+
+}
+
+abstract class ToDoItemState {
++<<create>>ToDoItemState(task: ToDoItem): ToDoItemState
++start()
+{abstract} +togglePause()
+{abstract} +finish()
++workedTime(): Duration
++addComment(comment: String)
+}
+
+class Pending extends ToDoItemState {
++<<create>>Pending(task: ToDoItemState): Pending
++start()
++togglePause()
++finish()
+}
+
+class InProgress extends ToDoItemState {
++<<create>>InProgress(task: ToDoItemState): InProgress
++togglePause()
++finish()
+}
+
+class Finished extends ToDoItemState {
++<<create>>Finished(task: ToDoItemState): Finished
++togglePause()
++finish()
++workedTime(): Duration
++addComment()
+}
+
+class Paused extends ToDoItemState {
++<<create>>Paused(task: ToDoItemState): Paused
++togglePause()
++finish()
+}
+ToDoItem -> ToDoItemState : task
+ToDoItem <- ToDoItemState : state
+@enduml
