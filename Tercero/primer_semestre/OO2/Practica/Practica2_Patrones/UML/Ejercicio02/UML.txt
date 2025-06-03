@@ -1,0 +1,31 @@
+@startuml
+abstract class Empleado {
++calcularSueldoTotal(): Integer
++calcularDescuento(): Integer
+{abstract} +calcularBasico(): Integer
+{abstract} +calcularAdicional(): Integer
+}
+
+class Temporario extends Empleado {
+-cantidadHoras: Integer
+-estaCasado: Boolean
+-cantidadHijos: Integer
++calcularBasico(): Integer
++calcularAdicional(): Integer
+}
+
+class Pasante extends Empleado {
+-cantidadExamenes: Integer
++calcularBasico(): Integer
++calcularAdicional(): Integer
+}
+
+class Planta extends Empleado {
+-estaCasado: Boolean
+-cantidadHijos: Integer
+-añosAntiguedad: Integer
++calcularBasico(): Integer
++calcularAdicional(): Integer
+}
+
+@enduml
