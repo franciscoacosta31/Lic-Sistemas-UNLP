@@ -1,0 +1,35 @@
+@startuml
+
+class Decodificador <<Context>> {
+-peliculas: Pelicula[*]
+-peliculasReproducidas: Pelicula[*]
+-estrategia: Mecanismo
++<<create>> Decodificador(peliculas: Pelicula[*], peliculasReproducidas: Pelicula[*], estrategia: Mecanismo): Decodificador
+}
+
+class Pelicula {
+-titulo: String
+-añoEstreno: Integer
+-puntaje: Integer
++<<create>> Pelicula(titulo: String, añoEstreno: Integer, puntaje: Integer): Pelicula
+}
+
+interface Mecanismo <<Strategy>> {
++sugerirPeliculas(decodificador: Decodificador)
+}
+
+class Novedad <<ConcreteStrategy>> implements Mecanismo {
++<<create>> Novedad(): Novedad 
+}
+
+class Similaridad <<ConcreteStrategy>> implements Mecanismo {
++<<create>> Novedad(): Novedad
+}
+
+class Puntaje <<ConcreteStrategy>> implements Mecanismo {
++<<create>> Novedad(): Novedad
+}
+Pelicula "similares*" <-  Pelicula
+Pelicula <- Decodificador
+Decodificador -> Mecanismo
+@enduml
