@@ -1,0 +1,61 @@
+@startuml
+class Calculadora <<Context>> {
++<<create>> Calculadora(): Calculadora
++getResultado(): String
++borrar()
++setValor(valor: Double)
++mas()
++menos()
++por()
++dividido()
+}
+
+abstract class Estado <<State>> {
++<<create>>Estado(contexto: Calculadora, valor: Real): Estado
++getResultado(): String
++borrar()
++mas()
++menos()
++por()
++dividido()
+{abstract} +setValor(valor: Double)
+}
+
+class Esperando <<ConcreteState>> extends Estado {
++<<create>> Esperando(contexto: Calculadora, valor: Real): Esperando
++getResultado(): String
++setValor(valor: Real)
++mas()
++menos()
++por()
++dividido()
+}
+
+class Sumando <<ConcreteState>> extends Estado {
++<<create>> Esperando(contexto: Calculadora, valor: Real): Sumando
++setValor(valor: Real)
+}
+
+class Restando <<ConcreteState>> extends Estado {
++<<create>> Esperando(contexto: Calculadora, valor: Real): Restando
++setValor(valor: Real)
+}
+
+class Multiplicando <<ConcreteState>> extends Estado {
++<<create>> Esperando(contexto: Calculadora, valor: Real): Multiplicando
++setValor(valor: Real)
+}
+
+class Dividiendo <<ConcreteState>> extends Estado {
++<<create>> Esperando(contexto: Calculadora, valor: Real): Dividiendo
++setValor(valor: Real)
+}
+
+class Error <<ConcreteState>> extends Estado {
++setValor(valor: Real)
++getResultado(): String
+}
+
+Calculadora <- Estado : context
+Calculadora -> Estado : state
+@enduml
